@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adventure xmlns="https://github.com/martinfrank/elitegames/aurealis/adventure">
+    <title>The Lost Beacon</title>
+    <description>A short test adventure.</description>
+    <author>Martin</author>
+    <locations>
+        <location id="loc.bridge">
+            <name>Bridge</name>
+            <description>The ship's bridge.</description>
+            <aiHints>Center of command.</aiHints>
+        </location>
+        <location id="loc.cargo">
+            <name>Cargo Hold</name>
+            <description>Storage area.</description>
+            <aiHints>Crates everywhere.</aiHints>
+        </location>
+    </locations>
+    <persons>
+        <person id="per.captain">
+            <name>Captain Ada</name>
+            <appearance>Tall, gray uniform.</appearance>
+            <role>Captain</role>
+            <aiHints>Strict but fair.</aiHints>
+        </person>
+        <person id="per.engineer">
+            <name>Bo Engineer</name>
+            <appearance>Oil-stained overalls.</appearance>
+            <role>Engineer</role>
+            <aiHints>Loves tinkering.</aiHints>
+        </person>
+    </persons>
+    <items>
+        <item id="itm.beacon">
+            <name>Beacon</name>
+            <appearance>Small metallic device.</appearance>
+            <purpose>Sends a distress signal.</purpose>
+            <aiHints>Plot critical.</aiHints>
+        </item>
+    </items>
+    <permissions>
+        <permission id="prm.bridgeAccess">
+            <name>Bridge access</name>
+            <description>Allowed onto the bridge.</description>
+            <grantCondition>Captain unlocks the door.</grantCondition>
+            <state>DENIED</state>
+        </permission>
+        <permission id="prm.beaconActivated">
+            <name>Beacon activated</name>
+            <description>The beacon is broadcasting.</description>
+            <grantCondition>Player activates the beacon.</grantCondition>
+            <state>DENIED</state>
+        </permission>
+    </permissions>
+    <chapters>
+        <chapter id="ch.1" position="1">
+            <name>Awakening</name>
+            <description>The player wakes up on the bridge.</description>
+            <aiHints>Set a tense, quiet scene.</aiHints>
+            <startTime>2387-04-12T08:00</startTime>
+            <startLocationRef ref="loc.bridge"/>
+            <locations>
+                <locationRef ref="loc.bridge"/>
+                <locationRef ref="loc.cargo"/>
+            </locations>
+            <persons>
+                <personRef ref="per.captain"/>
+            </persons>
+            <items>
+                <itemRef ref="itm.beacon"/>
+            </items>
+            <tasks>
+                <task id="tsk.activateBeacon">
+                    <description>Activate the beacon.</description>
+                    <purpose>Call for help.</purpose>
+                    <required>true</required>
+                    <requiredPermissions>
+                        <permissionRef ref="prm.bridgeAccess"/>
+                    </requiredPermissions>
+                    <grantedPermissions>
+                        <permissionRef ref="prm.beaconActivated"/>
+                    </grantedPermissions>
+                </task>
+            </tasks>
+        </chapter>
+    </chapters>
+</adventure>

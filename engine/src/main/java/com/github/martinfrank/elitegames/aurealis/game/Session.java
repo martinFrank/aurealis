@@ -7,7 +7,6 @@ import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Session {

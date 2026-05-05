@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="https://github.com/martinfrank/elitegames/aurealis/adventure"
+           xmlns:a="https://github.com/martinfrank/elitegames/aurealis/adventure"
+           targetNamespace="https://github.com/martinfrank/elitegames/aurealis/adventure"
+           elementFormDefault="qualified">
+
+    <xs:element name="adventure" type="AdventureType">
+
+        <xs:key name="chapterKey">
+            <xs:selector xpath="a:chapters/a:chapter"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="locationKey">
+            <xs:selector xpath="a:locations/a:location"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="personKey">
+            <xs:selector xpath="a:persons/a:person"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="itemKey">
+            <xs:selector xpath="a:items/a:item"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="permissionKey">
+            <xs:selector xpath="a:permissions/a:permission"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="taskKey">
+            <xs:selector xpath="a:chapters/a:chapter/a:tasks/a:task"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:keyref name="startLocationRefToLocation" refer="locationKey">
+            <xs:selector xpath="a:chapters/a:chapter/a:startLocationRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="chapterLocationRefToLocation" refer="locationKey">
+            <xs:selector xpath="a:chapters/a:chapter/a:locations/a:locationRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="chapterPersonRefToPerson" refer="personKey">
+            <xs:selector xpath="a:chapters/a:chapter/a:persons/a:personRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="chapterItemRefToItem" refer="itemKey">
+            <xs:selector xpath="a:chapters/a:chapter/a:items/a:itemRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="requiredPermissionRefToPermission" refer="permissionKey">
+            <xs:selector xpath=".//a:requiredPermissions/a:permissionRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="grantedPermissionRefToPermission" refer="permissionKey">
+            <xs:selector xpath=".//a:grantedPermissions/a:permissionRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+    </xs:element>
+
+    <xs:complexType name="AdventureType">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="locations">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="location" type="LocationType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="persons">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="person" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="items">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="item" type="ItemType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="permissions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="chapters">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="chapter" type="ChapterType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ChapterType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="aiHints" type="xs:string"/>
+            <xs:element name="startTime" type="xs:string"/>
+            <xs:element name="startLocationRef" type="RefType"/>
+            <xs:element name="locations">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="locationRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="persons">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="personRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="items">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="itemRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="tasks">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="task" type="TaskType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="position" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="LocationType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="aiHints" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PersonType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="appearance" type="xs:string"/>
+            <xs:element name="role" type="xs:string"/>
+            <xs:element name="aiHints" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ItemType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="appearance" type="xs:string"/>
+            <xs:element name="purpose" type="xs:string"/>
+            <xs:element name="aiHints" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="TaskType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="purpose" type="xs:string"/>
+            <xs:element name="required" type="xs:boolean"/>
+            <xs:element name="requiredPermissions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="grantedPermissions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PermissionType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="grantCondition" type="xs:string"/>
+            <xs:element name="state" type="PermissionStateType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="RefType">
+        <xs:attribute name="ref" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="PermissionStateType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GRANTED"/>
+            <xs:enumeration value="DENIED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

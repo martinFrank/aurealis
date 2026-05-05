@@ -7,6 +7,9 @@ public record Adventure(
         String description,
         String author,
         List<Chapter> chapters,
-        List<Permission> permissions
+        List<Permission> permissions,
+        List<Person> persons,
+        List<Item> items,
+        List<Location> locations
         ) {
 }
