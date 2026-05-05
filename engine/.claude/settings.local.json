@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(JAVA_HOME=\"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\" C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd *)",
+      "Bash(JAVA_HOME=\"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\" \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" clean test)"
+    ]
+  }
+}
