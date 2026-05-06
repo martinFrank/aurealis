@@ -167,6 +167,13 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="requiredPermissions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="startCutSceneRef" type="RefType" minOccurs="0"/>
             <xs:element name="endCutSceneRef" type="RefType" minOccurs="0"/>
         </xs:sequence>

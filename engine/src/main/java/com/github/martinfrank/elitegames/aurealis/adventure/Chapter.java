@@ -15,6 +15,7 @@ public record Chapter (
         List<Location> locations,
         List<Item> items,
         List<Task> tasks,
+        List<Permission> requiredPermissions,
         CutScene startCutScene,
         CutScene endCutScene)
         implements Comparable<Chapter> {

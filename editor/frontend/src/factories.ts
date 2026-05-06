@@ -94,6 +94,7 @@ export const newChapter = (position: number): Chapter => ({
   locationIds: [],
   itemIds: [],
   tasks: [],
+  requiredPermissionIds: [],
   startCutSceneId: '',
   endCutSceneId: '',
 });

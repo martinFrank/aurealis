@@ -105,6 +105,9 @@
                     <endCutSceneRef ref="cs.beaconLit"/>
                 </task>
             </tasks>
+            <requiredPermissions>
+                <permissionRef ref="prm.bridgeAccess"/>
+            </requiredPermissions>
             <startCutSceneRef ref="cs.intro"/>
         </chapter>
     </chapters>

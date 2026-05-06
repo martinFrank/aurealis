@@ -101,6 +101,7 @@ export function parseAdventureXml(xml: string): Adventure {
       locationIds: refs(e, 'locations', 'locationRef'),
       itemIds: refs(e, 'items', 'itemRef'),
       tasks: parseTasks(e),
+      requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
       startCutSceneId: child(e, 'startCutSceneRef')?.getAttribute('ref') ?? '',
       endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
     }));

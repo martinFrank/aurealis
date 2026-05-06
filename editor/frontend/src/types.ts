@@ -67,6 +67,7 @@ export type Chapter = {
   locationIds: string[];
   itemIds: string[];
   tasks: Task[];
+  requiredPermissionIds: string[];
   startCutSceneId: string;
   endCutSceneId: string;
 };

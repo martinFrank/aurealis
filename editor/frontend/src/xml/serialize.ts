@@ -94,6 +94,7 @@ function appendChapter(doc: XMLDocument, parent: Element, c: Chapter): void {
     appendTask(doc, tasks, t);
   }
 
+  appendRefs(doc, el, 'requiredPermissions', 'permissionRef', c.requiredPermissionIds);
   appendOptionalRef(doc, el, 'startCutSceneRef', c.startCutSceneId);
   appendOptionalRef(doc, el, 'endCutSceneRef', c.endCutSceneId);
 }

@@ -172,6 +172,7 @@
           <grantedPermissions/>
         </task>
       </tasks>
+      <requiredPermissions/>
     </chapter>
   </chapters>
 </adventure>

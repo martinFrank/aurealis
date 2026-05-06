@@ -241,6 +241,7 @@ public class AdventureReader {
                 readRefs(chapterEl, "locations", "locationRef", locations, "location"),
                 readRefs(chapterEl, "items", "itemRef", items, "item"),
                 readTasks(chapterEl, permissions, cutScenes),
+                readRefs(chapterEl, "requiredPermissions", "permissionRef", permissions, "permission"),
                 readOptionalCutSceneRef(chapterEl, "startCutSceneRef", cutScenes),
                 readOptionalCutSceneRef(chapterEl, "endCutSceneRef", cutScenes)
         );

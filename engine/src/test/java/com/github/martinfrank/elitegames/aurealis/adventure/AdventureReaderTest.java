@@ -132,6 +132,16 @@ class AdventureReaderTest {
     }
 
     @Test
+    void chapterRequiredPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
+        Adventure adventure = readSample();
+        Chapter chapter = adventure.chapters().get(0);
+        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+
+        assertEquals(1, chapter.requiredPermissions().size());
+        assertSame(bridgeAccess, chapter.requiredPermissions().get(0));
+    }
+
+    @Test
     void taskPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
         Adventure adventure = readSample();
         Task task = adventure.chapters().get(0).tasks().get(0);
@@ -189,7 +199,7 @@ class AdventureReaderTest {
                             <name>x</name><description>x</description><aiHints>x</aiHints>
                             <startTime>x</startTime>
                             <startLocationRef ref="loc.does-not-exist"/>
-                            <locations/><persons/><items/><tasks/>
+                            <locations/><persons/><items/><tasks/><requiredPermissions/>
                         </chapter>
                     </chapters>
                 </adventure>
