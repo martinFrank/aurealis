@@ -1,20 +1,5 @@
-import type { Item, Permission, Person } from '../types';
-
-type EntityHeaderProps = {
-  id: string;
-  onDelete: () => void;
-};
-
-function EntityHeader({ id, onDelete }: EntityHeaderProps) {
-  return (
-    <div className="entity-header">
-      <span className="id">{id}</span>
-      <button className="danger" onClick={onDelete}>
-        löschen
-      </button>
-    </div>
-  );
-}
+import type { CutScene, Item, Permission, Person } from '../types';
+import { EntityCard } from './EntityCard';
 
 export function PersonCard({
   value,
@@ -26,8 +11,12 @@ export function PersonCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="entity">
-      <EntityHeader id={value.id} onDelete={onDelete} />
+    <EntityCard
+      id={value.id}
+      title={value.name}
+      subtitle={value.role}
+      onDelete={onDelete}
+    >
       <div className="row">
         <div>
           <label>Name</label>
@@ -60,7 +49,7 @@ export function PersonCard({
           />
         </div>
       </div>
-      <div className="row">
+      <div className="row full">
         <div>
           <label>AI Hints</label>
           <textarea
@@ -69,7 +58,7 @@ export function PersonCard({
           />
         </div>
       </div>
-    </div>
+    </EntityCard>
   );
 }
 
@@ -83,8 +72,7 @@ export function ItemCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="entity">
-      <EntityHeader id={value.id} onDelete={onDelete} />
+    <EntityCard id={value.id} title={value.name} onDelete={onDelete}>
       <div className="row">
         <div>
           <label>Name</label>
@@ -117,7 +105,40 @@ export function ItemCard({
           />
         </div>
       </div>
-    </div>
+    </EntityCard>
+  );
+}
+
+export function CutSceneCard({
+  value,
+  onChange,
+  onDelete,
+}: {
+  value: CutScene;
+  onChange: (v: CutScene) => void;
+  onDelete: () => void;
+}) {
+  return (
+    <EntityCard id={value.id} title={value.name} onDelete={onDelete}>
+      <div className="row full">
+        <div>
+          <label>Name</label>
+          <input
+            value={value.name}
+            onChange={(e) => onChange({ ...value, name: e.target.value })}
+          />
+        </div>
+      </div>
+      <div className="row full">
+        <div>
+          <label>Text</label>
+          <textarea
+            value={value.text}
+            onChange={(e) => onChange({ ...value, text: e.target.value })}
+          />
+        </div>
+      </div>
+    </EntityCard>
   );
 }
 
@@ -131,8 +152,12 @@ export function PermissionCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="entity">
-      <EntityHeader id={value.id} onDelete={onDelete} />
+    <EntityCard
+      id={value.id}
+      title={value.name}
+      subtitle={value.state}
+      onDelete={onDelete}
+    >
       <div className="row">
         <div>
           <label>Name</label>
@@ -170,6 +195,6 @@ export function PermissionCard({
           />
         </div>
       </div>
-    </div>
+    </EntityCard>
   );
 }

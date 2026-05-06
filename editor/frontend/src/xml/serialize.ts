@@ -60,6 +60,14 @@ export function serializeAdventureXml(adventure: Adventure): string {
     appendText(doc, el, 'state', p.state);
   }
 
+  const cutScenes = appendChild(doc, root, 'cutScenes');
+  for (const cs of adventure.cutScenes) {
+    const el = appendChild(doc, cutScenes, 'cutScene');
+    el.setAttribute('id', cs.id);
+    appendText(doc, el, 'name', cs.name);
+    appendText(doc, el, 'text', cs.text);
+  }
+
   const chapters = appendChild(doc, root, 'chapters');
   for (const c of adventure.chapters) {
     appendChapter(doc, chapters, c);
@@ -87,16 +95,33 @@ function appendChapter(doc: XMLDocument, parent: Element, c: Chapter): void {
   for (const t of c.tasks) {
     appendTask(doc, tasks, t);
   }
+
+  appendOptionalRef(doc, el, 'startCutSceneRef', c.startCutSceneId);
+  appendOptionalRef(doc, el, 'endCutSceneRef', c.endCutSceneId);
 }
 
 function appendTask(doc: XMLDocument, parent: Element, t: Task): void {
   const el = appendChild(doc, parent, 'task');
   el.setAttribute('id', t.id);
+  appendText(doc, el, 'name', t.name);
   appendText(doc, el, 'description', t.description);
   appendText(doc, el, 'purpose', t.purpose);
   appendText(doc, el, 'required', String(t.required));
   appendRefs(doc, el, 'requiredPermissions', 'permissionRef', t.requiredPermissionIds);
   appendRefs(doc, el, 'grantedPermissions', 'permissionRef', t.grantedPermissionIds);
+  appendOptionalRef(doc, el, 'startCutSceneRef', t.startCutSceneId);
+  appendOptionalRef(doc, el, 'endCutSceneRef', t.endCutSceneId);
+}
+
+function appendOptionalRef(
+  doc: XMLDocument,
+  parent: Element,
+  name: string,
+  id: string,
+): void {
+  if (!id) return;
+  const el = appendChild(doc, parent, name);
+  el.setAttribute('ref', id);
 }
 
 function appendRefs(

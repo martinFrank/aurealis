@@ -1,6 +1,7 @@
 import type {
   Adventure,
   Chapter,
+  CutScene,
   Item,
   LocalizedPerson,
   Location,
@@ -82,6 +83,13 @@ export function parseAdventureXml(xml: string): Adventure {
       state: (text(e, 'state') as PermissionState) || 'DENIED',
     }));
 
+  const cutScenes: CutScene[] =
+    childrenOf(child(root, 'cutScenes') ?? root, 'cutScene').map((e) => ({
+      id: e.getAttribute('id') ?? '',
+      name: text(e, 'name'),
+      text: text(e, 'text'),
+    }));
+
   const chapters: Chapter[] =
     childrenOf(child(root, 'chapters') ?? root, 'chapter').map((e) => ({
       id: e.getAttribute('id') ?? '',
@@ -94,6 +102,8 @@ export function parseAdventureXml(xml: string): Adventure {
       locationIds: refs(e, 'locations', 'locationRef'),
       itemIds: refs(e, 'items', 'itemRef'),
       tasks: parseTasks(e),
+      startCutSceneId: child(e, 'startCutSceneRef')?.getAttribute('ref') ?? '',
+      endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
     }));
 
   return {
@@ -104,6 +114,7 @@ export function parseAdventureXml(xml: string): Adventure {
     persons,
     items,
     permissions,
+    cutScenes,
     chapters,
   };
 }
@@ -122,10 +133,13 @@ function parseTasks(chapterEl: Element): Task[] {
   if (!container) return [];
   return childrenOf(container, 'task').map((e) => ({
     id: e.getAttribute('id') ?? '',
+    name: text(e, 'name'),
     description: text(e, 'description'),
     purpose: text(e, 'purpose'),
     required: text(e, 'required') === 'true',
     requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
     grantedPermissionIds: refs(e, 'grantedPermissions', 'permissionRef'),
+    startCutSceneId: child(e, 'startCutSceneRef')?.getAttribute('ref') ?? '',
+    endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
   }));
 }

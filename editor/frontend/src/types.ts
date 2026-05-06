@@ -41,11 +41,20 @@ export type Item = {
 
 export type Task = {
   id: string;
+  name: string;
   description: string;
   purpose: string;
   required: boolean;
   requiredPermissionIds: string[];
   grantedPermissionIds: string[];
+  startCutSceneId: string;
+  endCutSceneId: string;
+};
+
+export type CutScene = {
+  id: string;
+  name: string;
+  text: string;
 };
 
 export type Chapter = {
@@ -59,6 +68,8 @@ export type Chapter = {
   locationIds: string[];
   itemIds: string[];
   tasks: Task[];
+  startCutSceneId: string;
+  endCutSceneId: string;
 };
 
 export type Adventure = {
@@ -69,5 +80,6 @@ export type Adventure = {
   persons: Person[];
   items: Item[];
   permissions: Permission[];
+  cutScenes: CutScene[];
   chapters: Chapter[];
 };

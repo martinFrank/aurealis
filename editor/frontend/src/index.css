@@ -115,8 +115,11 @@ label {
   background: #1b1d22;
   border: 1px solid #2d3038;
   border-radius: 4px;
-  padding: 0.75rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.entity.collapsed:hover {
+  border-color: #3a3e48;
 }
 
 .entity .row {
@@ -133,15 +136,84 @@ label {
 .entity-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.entity.open > .entity-header {
+  border-bottom: 1px solid #2d3038;
+}
+
+.entity-header .toggle {
+  color: #8e93a0;
+  width: 0.8rem;
+  flex-shrink: 0;
+}
+
+.entity-header .title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 28rem;
+}
+
+.entity-header .placeholder {
+  color: #8e93a0;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.entity-header .subtitle {
+  color: #b0b3bb;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 .entity-header .id {
   font-family: ui-monospace, monospace;
-  font-size: 0.8rem;
-  color: #8e93a0;
-  flex: 1;
+  font-size: 0.75rem;
+  color: #6e7280;
+  margin-left: auto;
+}
+
+.entity-header .extras {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.entity-body {
+  padding: 0.75rem;
+}
+
+.inline-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #b0b3bb;
+}
+
+.inline-checkbox input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+}
+
+.sublist-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.6rem;
+  align-items: end;
+  margin-bottom: 0.4rem;
+}
+
+.tasks-group {
+  margin-top: 0.8rem;
 }
 
 .refgroup {

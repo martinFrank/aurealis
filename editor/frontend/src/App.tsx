@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
-import type { Adventure, Chapter, Item, Location, Permission, Person } from './types';
+import type { Adventure, Chapter, CutScene, Item, Location, Permission, Person } from './types';
 import {
   newAdventure,
   newChapter,
+  newCutScene,
   newItem,
   newLocation,
   newPermission,
@@ -12,6 +13,7 @@ import { parseAdventureXml } from './xml/parse';
 import { serializeAdventureXml } from './xml/serialize';
 import { Section } from './components/Section';
 import {
+  CutSceneCard,
   ItemCard,
   PermissionCard,
   PersonCard,
@@ -179,6 +181,24 @@ export default function App() {
           }
         >
           + Permission
+        </button>
+      </Section>
+
+      <Section title="Cut Scenes" count={adventure.cutScenes.length}>
+        {adventure.cutScenes.map((c, idx) => (
+          <CutSceneCard
+            key={c.id}
+            value={c}
+            onChange={(v: CutScene) => updateAt('cutScenes', idx, v)}
+            onDelete={() => removeAt('cutScenes', idx)}
+          />
+        ))}
+        <button
+          onClick={() =>
+            update({ cutScenes: [...adventure.cutScenes, newCutScene()] })
+          }
+        >
+          + Cut Scene
         </button>
       </Section>
 

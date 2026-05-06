@@ -1,32 +1,55 @@
-import type { Permission, Task } from '../types';
-import { RefMultiSelect } from './RefMultiSelect';
+import type { CutScene, Permission, Task } from '../types';
+import { EntityCard } from './EntityCard';
+import { RefMultiSelect, RefSelect } from './RefMultiSelect';
 
 type Props = {
   value: Task;
   permissions: Permission[];
+  cutScenes: CutScene[];
   onChange: (v: Task) => void;
   onDelete: () => void;
 };
 
-export function TaskCard({ value, permissions, onChange, onDelete }: Props) {
+export function TaskCard({ value, permissions, cutScenes, onChange, onDelete }: Props) {
   const options = permissions.map((p) => ({ id: p.id, label: p.name }));
+  const csOpts = cutScenes.map((c) => ({ id: c.id, label: c.name }));
+
+  const subtitleParts: string[] = [];
+  if (value.required) subtitleParts.push('required');
+  if (value.requiredPermissionIds.length)
+    subtitleParts.push(`req ${value.requiredPermissionIds.length}`);
+  if (value.grantedPermissionIds.length)
+    subtitleParts.push(`grants ${value.grantedPermissionIds.length}`);
+  const subtitle = subtitleParts.join(' · ');
+
+  const requiredToggle = (
+    <label className="inline-checkbox">
+      <input
+        type="checkbox"
+        checked={value.required}
+        onChange={(e) => onChange({ ...value, required: e.target.checked })}
+      />
+      required
+    </label>
+  );
 
   return (
-    <div className="entity task">
-      <div className="entity-header">
-        <span className="id">{value.id}</span>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', margin: 0 }}>
+    <EntityCard
+      id={value.id}
+      title={value.name}
+      subtitle={subtitle || undefined}
+      extras={requiredToggle}
+      onDelete={onDelete}
+      className="task"
+    >
+      <div className="row full">
+        <div>
+          <label>Name</label>
           <input
-            type="checkbox"
-            checked={value.required}
-            onChange={(e) => onChange({ ...value, required: e.target.checked })}
-            style={{ width: 'auto' }}
+            value={value.name}
+            onChange={(e) => onChange({ ...value, name: e.target.value })}
           />
-          required
-        </label>
-        <button className="danger" onClick={onDelete}>
-          löschen
-        </button>
+        </div>
       </div>
       <div className="row">
         <div>
@@ -58,6 +81,20 @@ export function TaskCard({ value, permissions, onChange, onDelete }: Props) {
           onChange={(ids) => onChange({ ...value, grantedPermissionIds: ids })}
         />
       </div>
-    </div>
+      <div className="row">
+        <RefSelect
+          label="Start CutScene"
+          options={csOpts}
+          selectedId={value.startCutSceneId}
+          onChange={(id) => onChange({ ...value, startCutSceneId: id })}
+        />
+        <RefSelect
+          label="End CutScene"
+          options={csOpts}
+          selectedId={value.endCutSceneId}
+          onChange={(id) => onChange({ ...value, endCutSceneId: id })}
+        />
+      </div>
+    </EntityCard>
   );
 }

@@ -36,6 +36,7 @@ class AdventureReaderTest {
         assertEquals(2, adventure.persons().size());
         assertEquals(1, adventure.items().size());
         assertEquals(2, adventure.permissions().size());
+        assertEquals(2, adventure.cutScenes().size());
         assertEquals(1, adventure.chapters().size());
     }
 
@@ -132,6 +133,31 @@ class AdventureReaderTest {
     }
 
     @Test
+    void readsTaskFields() throws IOException {
+        Adventure adventure = readSample();
+        Task task = adventure.chapters().get(0).tasks().get(0);
+
+        assertEquals("Activate Beacon", task.name());
+        assertEquals("Activate the beacon.", task.description());
+        assertEquals("Call for help.", task.purpose());
+    }
+
+    @Test
+    void chapterAndTaskCutScenesAreSameInstancesAsAdventureCutScenes() throws IOException {
+        Adventure adventure = readSample();
+        Chapter chapter = adventure.chapters().get(0);
+        Task task = chapter.tasks().get(0);
+
+        CutScene intro = findById(adventure.cutScenes(), "cs.intro", CutScene::id);
+        CutScene beaconLit = findById(adventure.cutScenes(), "cs.beaconLit", CutScene::id);
+
+        assertSame(intro, chapter.startCutScene());
+        assertEquals(null, chapter.endCutScene());
+        assertEquals(null, task.startCutScene());
+        assertSame(beaconLit, task.endCutScene());
+    }
+
+    @Test
     void rejectsDanglingLocationReference() {
         String badXml = """
                 <?xml version="1.0" encoding="UTF-8"?>
@@ -145,6 +171,7 @@ class AdventureReaderTest {
                     <persons/>
                     <items/>
                     <permissions/>
+                    <cutScenes/>
                     <chapters>
                         <chapter id="ch.1" position="1">
                             <name>x</name><description>x</description><aiHints>x</aiHints>

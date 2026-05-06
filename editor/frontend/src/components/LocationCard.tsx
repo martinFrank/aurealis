@@ -1,5 +1,6 @@
 import type { Adventure, LocalizedPerson, Location } from '../types';
 import { newLocalizedPerson } from '../factories';
+import { EntityCard } from './EntityCard';
 import { RefMultiSelect, RefSelect } from './RefMultiSelect';
 
 type Props = {
@@ -29,14 +30,18 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
     onChange({ ...value, persons: [...value.persons, newLocalizedPerson()] });
   };
 
+  const counts: string[] = [];
+  if (value.requiredPermissionIds.length) counts.push(`${value.requiredPermissionIds.length} Perm`);
+  if (value.persons.length) counts.push(`${value.persons.length} Person`);
+  const subtitle = counts.join(' · ');
+
   return (
-    <div className="entity">
-      <div className="entity-header">
-        <span className="id">{value.id}</span>
-        <button className="danger" onClick={onDelete}>
-          löschen
-        </button>
-      </div>
+    <EntityCard
+      id={value.id}
+      title={value.name}
+      subtitle={subtitle || undefined}
+      onDelete={onDelete}
+    >
       <div className="row">
         <div>
           <label>Name</label>
@@ -74,21 +79,19 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
       <div className="refgroup">
         <label>Localized Persons ({value.persons.length})</label>
         {value.persons.map((lp, idx) => (
-          <div className="entity" key={idx} style={{ marginBottom: '0.4rem' }}>
-            <div className="row">
-              <RefSelect
-                label="Person"
-                options={personOpts}
-                selectedId={lp.personId}
-                onChange={(id) => updateLp(idx, { ...lp, personId: id })}
-              />
-              <RefSelect
-                label="Required Permission"
-                options={permOpts}
-                selectedId={lp.requiredPermissionId}
-                onChange={(id) => updateLp(idx, { ...lp, requiredPermissionId: id })}
-              />
-            </div>
+          <div className="sublist-row" key={idx}>
+            <RefSelect
+              label="Person"
+              options={personOpts}
+              selectedId={lp.personId}
+              onChange={(id) => updateLp(idx, { ...lp, personId: id })}
+            />
+            <RefSelect
+              label="Required Permission"
+              options={permOpts}
+              selectedId={lp.requiredPermissionId}
+              onChange={(id) => updateLp(idx, { ...lp, requiredPermissionId: id })}
+            />
             <button className="danger" onClick={() => removeLp(idx)}>
               entfernen
             </button>
@@ -96,6 +99,6 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
         ))}
         <button onClick={addLp}>+ Localized Person</button>
       </div>
-    </div>
+    </EntityCard>
   );
 }

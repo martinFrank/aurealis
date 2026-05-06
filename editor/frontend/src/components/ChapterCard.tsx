@@ -1,5 +1,6 @@
 import type { Adventure, Chapter, Task } from '../types';
 import { newTask } from '../factories';
+import { EntityCard } from './EntityCard';
 import { RefMultiSelect, RefSelect } from './RefMultiSelect';
 import { TaskCard } from './TaskCard';
 
@@ -13,6 +14,7 @@ type Props = {
 export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
   const locOpts = adventure.locations.map((l) => ({ id: l.id, label: l.name }));
   const itmOpts = adventure.items.map((i) => ({ id: i.id, label: i.name }));
+  const csOpts = adventure.cutScenes.map((c) => ({ id: c.id, label: c.name }));
 
   const updateTask = (idx: number, updated: Task) => {
     const tasks = value.tasks.slice();
@@ -30,14 +32,19 @@ export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
     onChange({ ...value, tasks: [...value.tasks, newTask()] });
   };
 
+  const subtitleParts: string[] = [`Pos ${value.position}`];
+  if (value.tasks.length) subtitleParts.push(`${value.tasks.length} Task`);
+  const subtitle = subtitleParts.join(' · ');
+
   return (
-    <div className="entity">
-      <div className="entity-header">
-        <span className="id">{value.id}</span>
-        <button className="danger" onClick={onDelete}>
-          Chapter löschen
-        </button>
-      </div>
+    <EntityCard
+      id={value.id}
+      title={value.name}
+      subtitle={subtitle}
+      onDelete={onDelete}
+      deleteLabel="Chapter löschen"
+      className="chapter"
+    >
       <div className="row">
         <div>
           <label>Name</label>
@@ -104,19 +111,35 @@ export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
         />
       </div>
 
-      <div className="refgroup" style={{ marginTop: '0.8rem' }}>
+      <div className="row">
+        <RefSelect
+          label="Start CutScene"
+          options={csOpts}
+          selectedId={value.startCutSceneId}
+          onChange={(id) => onChange({ ...value, startCutSceneId: id })}
+        />
+        <RefSelect
+          label="End CutScene"
+          options={csOpts}
+          selectedId={value.endCutSceneId}
+          onChange={(id) => onChange({ ...value, endCutSceneId: id })}
+        />
+      </div>
+
+      <div className="refgroup tasks-group">
         <label>Tasks ({value.tasks.length})</label>
         {value.tasks.map((t, idx) => (
           <TaskCard
             key={t.id}
             value={t}
             permissions={adventure.permissions}
+            cutScenes={adventure.cutScenes}
             onChange={(u) => updateTask(idx, u)}
             onDelete={() => removeTask(idx)}
           />
         ))}
         <button onClick={addTask}>+ Task</button>
       </div>
-    </div>
+    </EntityCard>
   );
 }

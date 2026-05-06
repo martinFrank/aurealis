@@ -10,6 +10,7 @@ public record Adventure(
         List<Permission> permissions,
         List<Person> persons,
         List<Item> items,
-        List<Location> locations
+        List<Location> locations,
+        List<CutScene> cutScenes
         ) {
 }

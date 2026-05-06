@@ -14,7 +14,9 @@ public record Chapter (
         String startTime,
         List<Location> locations,
         List<Item> items,
-        List<Task> tasks)
+        List<Task> tasks,
+        CutScene startCutScene,
+        CutScene endCutScene)
         implements Comparable<Chapter> {
 
     @Override

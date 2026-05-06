@@ -32,6 +32,11 @@
             <xs:field xpath="@id"/>
         </xs:key>
 
+        <xs:key name="cutSceneKey">
+            <xs:selector xpath="a:cutScenes/a:cutScene"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
         <xs:key name="taskKey">
             <xs:selector xpath="a:chapters/a:chapter/a:tasks/a:task"/>
             <xs:field xpath="@id"/>
@@ -72,6 +77,16 @@
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
+        <xs:keyref name="startCutSceneRefToCutScene" refer="cutSceneKey">
+            <xs:selector xpath=".//a:startCutSceneRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:keyref name="endCutSceneRefToCutScene" refer="cutSceneKey">
+            <xs:selector xpath=".//a:endCutSceneRef"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
     </xs:element>
 
     <xs:complexType name="AdventureType">
@@ -104,6 +119,13 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="cutScenes">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="cutScene" type="CutSceneType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -145,6 +167,8 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="startCutSceneRef" type="RefType" minOccurs="0"/>
+            <xs:element name="endCutSceneRef" type="RefType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="position" type="xs:int" use="required"/>
@@ -203,6 +227,7 @@
 
     <xs:complexType name="TaskType">
         <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>
             <xs:element name="purpose" type="xs:string"/>
             <xs:element name="required" type="xs:boolean"/>
@@ -220,6 +245,16 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="startCutSceneRef" type="RefType" minOccurs="0"/>
+            <xs:element name="endCutSceneRef" type="RefType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CutSceneType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="text" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
     </xs:complexType>

@@ -40,10 +40,11 @@ public class AdventureReader {
         Element root = doc.getDocumentElement();
 
         Map<String, Permission> permissions = readPermissions(root);
+        Map<String, CutScene> cutScenes = readCutScenes(root);
         Map<String, Person> persons = readPersons(root);
         Map<String, Item> items = readItems(root);
         Map<String, Location> locations = readLocations(root, persons, permissions);
-        List<Chapter> chapters = readChapters(root, locations, items, permissions);
+        List<Chapter> chapters = readChapters(root, locations, items, permissions, cutScenes);
 
         return new Adventure(
                 textOf(root, "title"),
@@ -53,7 +54,8 @@ public class AdventureReader {
                 new ArrayList<>(permissions.values()),
                 new ArrayList<>(persons.values()),
                 new ArrayList<>(items.values()),
-                new ArrayList<>(locations.values())
+                new ArrayList<>(locations.values()),
+                new ArrayList<>(cutScenes.values())
         );
     }
 
@@ -171,17 +173,41 @@ public class AdventureReader {
         return map;
     }
 
+    private Map<String, CutScene> readCutScenes(Element root) {
+        Map<String, CutScene> map = new LinkedHashMap<>();
+        Element container = childElement(root, "cutScenes");
+        if (container == null) return map;
+        for (Element e : children(container, "cutScene")) {
+            String id = e.getAttribute("id");
+            map.put(id, new CutScene(id, textOf(e, "name"), textOf(e, "text")));
+        }
+        return map;
+    }
+
+    private CutScene readOptionalCutSceneRef(
+            Element parent,
+            String localName,
+            Map<String, CutScene> cutScenes
+    ) {
+        Element refEl = childElement(parent, localName);
+        if (refEl == null) return null;
+        String id = refEl.getAttribute("ref");
+        if (id == null || id.isEmpty()) return null;
+        return resolve(cutScenes, id, "cutScene");
+    }
+
     private List<Chapter> readChapters(
             Element root,
             Map<String, Location> locations,
             Map<String, Item> items,
-            Map<String, Permission> permissions
+            Map<String, Permission> permissions,
+            Map<String, CutScene> cutScenes
     ) {
         List<Chapter> result = new ArrayList<>();
         Element container = childElement(root, "chapters");
         if (container == null) return result;
         for (Element e : children(container, "chapter")) {
-            result.add(readChapter(e, locations, items, permissions));
+            result.add(readChapter(e, locations, items, permissions, cutScenes));
         }
         return result;
     }
@@ -190,7 +216,8 @@ public class AdventureReader {
             Element chapterEl,
             Map<String, Location> locations,
             Map<String, Item> items,
-            Map<String, Permission> permissions
+            Map<String, Permission> permissions,
+            Map<String, CutScene> cutScenes
     ) {
         String id = chapterEl.getAttribute("id");
         int position = Integer.parseInt(chapterEl.getAttribute("position"));
@@ -208,22 +235,31 @@ public class AdventureReader {
                 textOf(chapterEl, "startTime"),
                 readRefs(chapterEl, "locations", "locationRef", locations, "location"),
                 readRefs(chapterEl, "items", "itemRef", items, "item"),
-                readTasks(chapterEl, permissions)
+                readTasks(chapterEl, permissions, cutScenes),
+                readOptionalCutSceneRef(chapterEl, "startCutSceneRef", cutScenes),
+                readOptionalCutSceneRef(chapterEl, "endCutSceneRef", cutScenes)
         );
     }
 
-    private List<Task> readTasks(Element chapterEl, Map<String, Permission> permissions) {
+    private List<Task> readTasks(
+            Element chapterEl,
+            Map<String, Permission> permissions,
+            Map<String, CutScene> cutScenes
+    ) {
         List<Task> result = new ArrayList<>();
         Element container = childElement(chapterEl, "tasks");
         if (container == null) return result;
         for (Element taskEl : children(container, "task")) {
             result.add(new Task(
                     taskEl.getAttribute("id"),
+                    textOf(taskEl, "name"),
                     textOf(taskEl, "description"),
                     textOf(taskEl, "purpose"),
                     Boolean.parseBoolean(textOf(taskEl, "required")),
                     readRefs(taskEl, "requiredPermissions", "permissionRef", permissions, "permission"),
-                    readRefs(taskEl, "grantedPermissions", "permissionRef", permissions, "permission")
+                    readRefs(taskEl, "grantedPermissions", "permissionRef", permissions, "permission"),
+                    readOptionalCutSceneRef(taskEl, "startCutSceneRef", cutScenes),
+                    readOptionalCutSceneRef(taskEl, "endCutSceneRef", cutScenes)
             ));
         }
         return result;

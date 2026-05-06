@@ -64,6 +64,16 @@
             <state>DENIED</state>
         </permission>
     </permissions>
+    <cutScenes>
+        <cutScene id="cs.intro">
+            <name>Awakening Intro</name>
+            <text>The lights flicker as you wake up...</text>
+        </cutScene>
+        <cutScene id="cs.beaconLit">
+            <name>Beacon Lit</name>
+            <text>The beacon hums to life and pulses against the dark.</text>
+        </cutScene>
+    </cutScenes>
     <chapters>
         <chapter id="ch.1" position="1">
             <name>Awakening</name>
@@ -80,6 +90,7 @@
             </items>
             <tasks>
                 <task id="tsk.activateBeacon">
+                    <name>Activate Beacon</name>
                     <description>Activate the beacon.</description>
                     <purpose>Call for help.</purpose>
                     <required>true</required>
@@ -89,8 +100,10 @@
                     <grantedPermissions>
                         <permissionRef ref="prm.beaconActivated"/>
                     </grantedPermissions>
+                    <endCutSceneRef ref="cs.beaconLit"/>
                 </task>
             </tasks>
+            <startCutSceneRef ref="cs.intro"/>
         </chapter>
     </chapters>
 </adventure>

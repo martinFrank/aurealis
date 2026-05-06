@@ -4,9 +4,12 @@ import java.util.List;
 
 public record Task(
         String id,
+        String name,
         String description, //what
         String purpose, //why
         boolean required,
         List<Permission> requiredPermissions,
-        List<Permission> grantedPermissions) {
+        List<Permission> grantedPermissions,
+        CutScene startCutScene,
+        CutScene endCutScene) {
 }

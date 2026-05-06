@@ -1,6 +1,7 @@
 import type {
   Adventure,
   Chapter,
+  CutScene,
   Item,
   LocalizedPerson,
   Location,
@@ -22,6 +23,7 @@ export const newAdventure = (): Adventure => ({
   persons: [],
   items: [],
   permissions: [],
+  cutScenes: [],
   chapters: [],
 });
 
@@ -64,13 +66,22 @@ export const newPermission = (): Permission => ({
   state: 'DENIED',
 });
 
+export const newCutScene = (): CutScene => ({
+  id: `cs.${shortId()}`,
+  name: '',
+  text: '',
+});
+
 export const newTask = (): Task => ({
   id: `tsk.${shortId()}`,
+  name: '',
   description: '',
   purpose: '',
   required: false,
   requiredPermissionIds: [],
   grantedPermissionIds: [],
+  startCutSceneId: '',
+  endCutSceneId: '',
 });
 
 export const newChapter = (position: number): Chapter => ({
@@ -84,4 +95,6 @@ export const newChapter = (position: number): Chapter => ({
   locationIds: [],
   itemIds: [],
   tasks: [],
+  startCutSceneId: '',
+  endCutSceneId: '',
 });
