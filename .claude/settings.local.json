@@ -8,7 +8,14 @@
       "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; $mvn = \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\"; & $mvn -f \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine\\\\pom.xml\" -Dtest=AdventureReaderTest test 2>&1 | Select-String -Pattern \"Tests run|ERROR|FAIL|BUILD\" | Select-Object -First 30)",
       "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; $mvn = \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\"; & $mvn -f \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine\\\\pom.xml\" -Dtest=AdventureReaderTest test 2>&1 | Select-String -Pattern \"Tests run|ERROR|FAIL|BUILD\" | Select-Object -First 20)",
       "PowerShell(try { $r = Invoke-WebRequest -UseBasicParsing -Uri \"http://localhost:5173/\" -TimeoutSec 5; $r.StatusCode; \\($r.Content -match \"Aurealis Adventure Editor\"\\) } catch { $_.Exception.Message })",
-      "PowerShell(Get-Process *)"
+      "PowerShell(Get-Process *)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; $mvn = \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\"; & $mvn -f \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine\\\\pom.xml\" -Dtest=AdventureReaderTest test 2>&1 | Select-String -Pattern \"Tests run|ERROR|FAIL|BUILD\" | Select-Object -First 25)",
+      "Bash(npx tsc *)",
+      "Bash(C:/Users/m.frank/work/apache-maven-3.9.6-bin/bin/mvn.cmd *)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\bin\\\\mvn.cmd\" -pl engine -am test -q)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -am test -q)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -am test -q)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -f \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine\\\\pom.xml\" test -q)"
     ]
   }
 }

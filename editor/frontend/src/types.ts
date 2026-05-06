@@ -8,17 +8,25 @@ export type Permission = {
   state: PermissionState;
 };
 
+export type LocalizedPerson = {
+  personId: string;
+  requiredPermissionId: string;
+};
+
 export type Location = {
   id: string;
   name: string;
   description: string;
   aiHints: string;
+  requiredPermissionIds: string[];
+  persons: LocalizedPerson[];
 };
 
 export type Person = {
   id: string;
   name: string;
   appearance: string;
+  personality: string;
   role: string;
   aiHints: string;
 };
@@ -49,7 +57,6 @@ export type Chapter = {
   startLocationId: string;
   startTime: string;
   locationIds: string[];
-  personIds: string[];
   itemIds: string[];
   tasks: Task[];
 };

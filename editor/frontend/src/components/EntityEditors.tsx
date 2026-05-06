@@ -1,4 +1,4 @@
-import type { Item, Location, Permission, Person } from '../types';
+import type { Item, Permission, Person } from '../types';
 
 type EntityHeaderProps = {
   id: string;
@@ -12,47 +12,6 @@ function EntityHeader({ id, onDelete }: EntityHeaderProps) {
       <button className="danger" onClick={onDelete}>
         löschen
       </button>
-    </div>
-  );
-}
-
-export function LocationCard({
-  value,
-  onChange,
-  onDelete,
-}: {
-  value: Location;
-  onChange: (v: Location) => void;
-  onDelete: () => void;
-}) {
-  return (
-    <div className="entity">
-      <EntityHeader id={value.id} onDelete={onDelete} />
-      <div className="row">
-        <div>
-          <label>Name</label>
-          <input
-            value={value.name}
-            onChange={(e) => onChange({ ...value, name: e.target.value })}
-          />
-        </div>
-        <div>
-          <label>AI Hints</label>
-          <input
-            value={value.aiHints}
-            onChange={(e) => onChange({ ...value, aiHints: e.target.value })}
-          />
-        </div>
-      </div>
-      <div className="row full">
-        <div>
-          <label>Description</label>
-          <textarea
-            value={value.description}
-            onChange={(e) => onChange({ ...value, description: e.target.value })}
-          />
-        </div>
-      </div>
     </div>
   );
 }
@@ -93,6 +52,15 @@ export function PersonCard({
             onChange={(e) => onChange({ ...value, appearance: e.target.value })}
           />
         </div>
+        <div>
+          <label>Personality</label>
+          <textarea
+            value={value.personality}
+            onChange={(e) => onChange({ ...value, personality: e.target.value })}
+          />
+        </div>
+      </div>
+      <div className="row">
         <div>
           <label>AI Hints</label>
           <textarea

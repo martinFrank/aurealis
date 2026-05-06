@@ -12,7 +12,6 @@ type Props = {
 
 export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
   const locOpts = adventure.locations.map((l) => ({ id: l.id, label: l.name }));
-  const perOpts = adventure.persons.map((p) => ({ id: p.id, label: p.name }));
   const itmOpts = adventure.items.map((i) => ({ id: i.id, label: i.name }));
 
   const updateTask = (idx: number, updated: Task) => {
@@ -98,20 +97,11 @@ export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
           onChange={(ids) => onChange({ ...value, locationIds: ids })}
         />
         <RefMultiSelect
-          label="Persons"
-          options={perOpts}
-          selectedIds={value.personIds}
-          onChange={(ids) => onChange({ ...value, personIds: ids })}
-        />
-      </div>
-      <div className="row">
-        <RefMultiSelect
           label="Items"
           options={itmOpts}
           selectedIds={value.itemIds}
           onChange={(ids) => onChange({ ...value, itemIds: ids })}
         />
-        <div />
       </div>
 
       <div className="refgroup" style={{ marginTop: '0.8rem' }}>

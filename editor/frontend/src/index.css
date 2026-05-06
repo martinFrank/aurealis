@@ -156,8 +156,31 @@ label {
   margin-bottom: 0.4rem;
 }
 
-.refgroup select[multiple] {
-  min-height: 5rem;
+.refgroup .checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.2rem 0.6rem;
+}
+
+.refgroup .checklist li {
+  margin: 0;
+}
+
+.refgroup .checklist label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 400;
+  margin: 0;
+  cursor: pointer;
+}
+
+.refgroup .checklist input[type='checkbox'] {
+  width: auto;
+  margin: 0;
 }
 
 .task {

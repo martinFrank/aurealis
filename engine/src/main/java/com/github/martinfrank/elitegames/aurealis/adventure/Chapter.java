@@ -13,7 +13,6 @@ public record Chapter (
         Location startLocation,
         String startTime,
         List<Location> locations,
-        List<Person> persons,
         List<Item> items,
         List<Task> tasks)
         implements Comparable<Chapter> {

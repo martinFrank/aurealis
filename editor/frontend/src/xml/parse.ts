@@ -2,6 +2,7 @@ import type {
   Adventure,
   Chapter,
   Item,
+  LocalizedPerson,
   Location,
   Permission,
   PermissionState,
@@ -49,6 +50,8 @@ export function parseAdventureXml(xml: string): Adventure {
       name: text(e, 'name'),
       description: text(e, 'description'),
       aiHints: text(e, 'aiHints'),
+      requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
+      persons: parseLocalizedPersons(e),
     }));
 
   const persons: Person[] =
@@ -56,6 +59,7 @@ export function parseAdventureXml(xml: string): Adventure {
       id: e.getAttribute('id') ?? '',
       name: text(e, 'name'),
       appearance: text(e, 'appearance'),
+      personality: text(e, 'personality'),
       role: text(e, 'role'),
       aiHints: text(e, 'aiHints'),
     }));
@@ -88,7 +92,6 @@ export function parseAdventureXml(xml: string): Adventure {
       startLocationId: child(e, 'startLocationRef')?.getAttribute('ref') ?? '',
       startTime: text(e, 'startTime'),
       locationIds: refs(e, 'locations', 'locationRef'),
-      personIds: refs(e, 'persons', 'personRef'),
       itemIds: refs(e, 'items', 'itemRef'),
       tasks: parseTasks(e),
     }));
@@ -103,6 +106,15 @@ export function parseAdventureXml(xml: string): Adventure {
     permissions,
     chapters,
   };
+}
+
+function parseLocalizedPersons(locationEl: Element): LocalizedPerson[] {
+  const container = child(locationEl, 'persons');
+  if (!container) return [];
+  return childrenOf(container, 'localizedPerson').map((e) => ({
+    personId: child(e, 'personRef')?.getAttribute('ref') ?? '',
+    requiredPermissionId: child(e, 'permissionRef')?.getAttribute('ref') ?? '',
+  }));
 }
 
 function parseTasks(chapterEl: Element): Task[] {

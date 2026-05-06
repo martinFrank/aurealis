@@ -17,6 +17,16 @@ export function serializeAdventureXml(adventure: Adventure): string {
     appendText(doc, el, 'name', l.name);
     appendText(doc, el, 'description', l.description);
     appendText(doc, el, 'aiHints', l.aiHints);
+    appendRefs(doc, el, 'requiredPermissions', 'permissionRef', l.requiredPermissionIds);
+
+    const personsContainer = appendChild(doc, el, 'persons');
+    for (const lp of l.persons) {
+      const lpEl = appendChild(doc, personsContainer, 'localizedPerson');
+      const pRef = appendChild(doc, lpEl, 'personRef');
+      pRef.setAttribute('ref', lp.personId);
+      const permRef = appendChild(doc, lpEl, 'permissionRef');
+      permRef.setAttribute('ref', lp.requiredPermissionId);
+    }
   }
 
   const persons = appendChild(doc, root, 'persons');
@@ -25,6 +35,7 @@ export function serializeAdventureXml(adventure: Adventure): string {
     el.setAttribute('id', p.id);
     appendText(doc, el, 'name', p.name);
     appendText(doc, el, 'appearance', p.appearance);
+    appendText(doc, el, 'personality', p.personality);
     appendText(doc, el, 'role', p.role);
     appendText(doc, el, 'aiHints', p.aiHints);
   }
@@ -70,7 +81,6 @@ function appendChapter(doc: XMLDocument, parent: Element, c: Chapter): void {
   startRef.setAttribute('ref', c.startLocationId);
 
   appendRefs(doc, el, 'locations', 'locationRef', c.locationIds);
-  appendRefs(doc, el, 'persons', 'personRef', c.personIds);
   appendRefs(doc, el, 'items', 'itemRef', c.itemIds);
 
   const tasks = appendChild(doc, el, 'tasks');

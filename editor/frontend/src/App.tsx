@@ -13,10 +13,10 @@ import { serializeAdventureXml } from './xml/serialize';
 import { Section } from './components/Section';
 import {
   ItemCard,
-  LocationCard,
   PermissionCard,
   PersonCard,
 } from './components/EntityEditors';
+import { LocationCard } from './components/LocationCard';
 import { ChapterCard } from './components/ChapterCard';
 
 export default function App() {
@@ -120,6 +120,7 @@ export default function App() {
           <LocationCard
             key={l.id}
             value={l}
+            adventure={adventure}
             onChange={(v: Location) => updateAt('locations', idx, v)}
             onDelete={() => removeAt('locations', idx)}
           />

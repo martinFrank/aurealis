@@ -39,11 +39,11 @@ public class AdventureReader {
         Document doc = parse(xmlInputStream);
         Element root = doc.getDocumentElement();
 
-        Map<String, Location> locations = readLocations(root);
+        Map<String, Permission> permissions = readPermissions(root);
         Map<String, Person> persons = readPersons(root);
         Map<String, Item> items = readItems(root);
-        Map<String, Permission> permissions = readPermissions(root);
-        List<Chapter> chapters = readChapters(root, locations, persons, items, permissions);
+        Map<String, Location> locations = readLocations(root, persons, permissions);
+        List<Chapter> chapters = readChapters(root, locations, items, permissions);
 
         return new Adventure(
                 textOf(root, "title"),
@@ -79,7 +79,11 @@ public class AdventureReader {
         }
     }
 
-    private Map<String, Location> readLocations(Element root) {
+    private Map<String, Location> readLocations(
+            Element root,
+            Map<String, Person> persons,
+            Map<String, Permission> permissions
+    ) {
         Map<String, Location> map = new LinkedHashMap<>();
         Element container = childElement(root, "locations");
         if (container == null) return map;
@@ -89,10 +93,30 @@ public class AdventureReader {
                     id,
                     textOf(e, "name"),
                     textOf(e, "description"),
-                    textOf(e, "aiHints")
+                    textOf(e, "aiHints"),
+                    readRefs(e, "requiredPermissions", "permissionRef", permissions, "permission"),
+                    readLocalizedPersons(e, persons, permissions)
             ));
         }
         return map;
+    }
+
+    private List<Location.LocalizedPerson> readLocalizedPersons(
+            Element locationEl,
+            Map<String, Person> persons,
+            Map<String, Permission> permissions
+    ) {
+        List<Location.LocalizedPerson> result = new ArrayList<>();
+        Element container = childElement(locationEl, "persons");
+        if (container == null) return result;
+        for (Element lpEl : children(container, "localizedPerson")) {
+            Element personRef = childElement(lpEl, "personRef");
+            Element permRef = childElement(lpEl, "permissionRef");
+            Person person = resolve(persons, personRef.getAttribute("ref"), "person");
+            Permission permission = resolve(permissions, permRef.getAttribute("ref"), "permission");
+            result.add(new Location.LocalizedPerson(person, permission));
+        }
+        return result;
     }
 
     private Map<String, Person> readPersons(Element root) {
@@ -105,6 +129,7 @@ public class AdventureReader {
                     id,
                     textOf(e, "name"),
                     textOf(e, "appearance"),
+                    textOf(e, "personality"),
                     textOf(e, "role"),
                     textOf(e, "aiHints")
             ));
@@ -149,7 +174,6 @@ public class AdventureReader {
     private List<Chapter> readChapters(
             Element root,
             Map<String, Location> locations,
-            Map<String, Person> persons,
             Map<String, Item> items,
             Map<String, Permission> permissions
     ) {
@@ -157,7 +181,7 @@ public class AdventureReader {
         Element container = childElement(root, "chapters");
         if (container == null) return result;
         for (Element e : children(container, "chapter")) {
-            result.add(readChapter(e, locations, persons, items, permissions));
+            result.add(readChapter(e, locations, items, permissions));
         }
         return result;
     }
@@ -165,7 +189,6 @@ public class AdventureReader {
     private Chapter readChapter(
             Element chapterEl,
             Map<String, Location> locations,
-            Map<String, Person> persons,
             Map<String, Item> items,
             Map<String, Permission> permissions
     ) {
@@ -184,7 +207,6 @@ public class AdventureReader {
                 startLocation,
                 textOf(chapterEl, "startTime"),
                 readRefs(chapterEl, "locations", "locationRef", locations, "location"),
-                readRefs(chapterEl, "persons", "personRef", persons, "person"),
                 readRefs(chapterEl, "items", "itemRef", items, "item"),
                 readTasks(chapterEl, permissions)
         );

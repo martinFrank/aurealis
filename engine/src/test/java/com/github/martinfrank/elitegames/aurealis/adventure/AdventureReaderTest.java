@@ -50,6 +50,41 @@ class AdventureReaderTest {
     }
 
     @Test
+    void locationRequiredPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
+        Adventure adventure = readSample();
+        Location bridge = findById(adventure.locations(), "loc.bridge", Location::id);
+        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+
+        assertEquals(1, bridge.requiredPermissions().size());
+        assertSame(bridgeAccess, bridge.requiredPermissions().get(0));
+    }
+
+    @Test
+    void locationLocalizedPersonsResolveBothRefs() throws IOException {
+        Adventure adventure = readSample();
+        Location bridge = findById(adventure.locations(), "loc.bridge", Location::id);
+        Person captain = findById(adventure.persons(), "per.captain", Person::id);
+        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+
+        assertEquals(1, bridge.persons().size());
+        Location.LocalizedPerson lp = bridge.persons().get(0);
+        assertSame(captain, lp.person());
+        assertSame(bridgeAccess, lp.requiredPermission());
+    }
+
+    @Test
+    void readsPersonFields() throws IOException {
+        Adventure adventure = readSample();
+        Person captain = findById(adventure.persons(), "per.captain", Person::id);
+
+        assertEquals("Captain Ada", captain.name());
+        assertEquals("Tall, gray uniform.", captain.appearance());
+        assertEquals("Calm, decisive, slow to anger.", captain.personality());
+        assertEquals("Captain", captain.role());
+        assertEquals("Strict but fair.", captain.aiHints());
+    }
+
+    @Test
     void readsItemFields() throws IOException {
         Adventure adventure = readSample();
         Item beacon = findById(adventure.items(), "itm.beacon", Item::id);
@@ -75,13 +110,11 @@ class AdventureReaderTest {
 
         Location bridge = findById(adventure.locations(), "loc.bridge", Location::id);
         Location cargo = findById(adventure.locations(), "loc.cargo", Location::id);
-        Person captain = findById(adventure.persons(), "per.captain", Person::id);
         Item beacon = findById(adventure.items(), "itm.beacon", Item::id);
 
         assertSame(bridge, chapter.startLocation());
         assertSame(bridge, chapter.locations().get(0));
         assertSame(cargo, chapter.locations().get(1));
-        assertSame(captain, chapter.persons().get(0));
         assertSame(beacon, chapter.items().get(0));
     }
 

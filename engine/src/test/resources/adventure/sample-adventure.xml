@@ -8,23 +8,36 @@
             <name>Bridge</name>
             <description>The ship's bridge.</description>
             <aiHints>Center of command.</aiHints>
+            <requiredPermissions>
+                <permissionRef ref="prm.bridgeAccess"/>
+            </requiredPermissions>
+            <persons>
+                <localizedPerson>
+                    <personRef ref="per.captain"/>
+                    <permissionRef ref="prm.bridgeAccess"/>
+                </localizedPerson>
+            </persons>
         </location>
         <location id="loc.cargo">
             <name>Cargo Hold</name>
             <description>Storage area.</description>
             <aiHints>Crates everywhere.</aiHints>
+            <requiredPermissions/>
+            <persons/>
         </location>
     </locations>
     <persons>
         <person id="per.captain">
             <name>Captain Ada</name>
             <appearance>Tall, gray uniform.</appearance>
+            <personality>Calm, decisive, slow to anger.</personality>
             <role>Captain</role>
             <aiHints>Strict but fair.</aiHints>
         </person>
         <person id="per.engineer">
             <name>Bo Engineer</name>
             <appearance>Oil-stained overalls.</appearance>
+            <personality>Cheerful, talkative, easily distracted.</personality>
             <role>Engineer</role>
             <aiHints>Loves tinkering.</aiHints>
         </person>
@@ -62,9 +75,6 @@
                 <locationRef ref="loc.bridge"/>
                 <locationRef ref="loc.cargo"/>
             </locations>
-            <persons>
-                <personRef ref="per.captain"/>
-            </persons>
             <items>
                 <itemRef ref="itm.beacon"/>
             </items>

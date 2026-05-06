@@ -2,6 +2,7 @@ import type {
   Adventure,
   Chapter,
   Item,
+  LocalizedPerson,
   Location,
   Permission,
   Person,
@@ -29,12 +30,20 @@ export const newLocation = (): Location => ({
   name: '',
   description: '',
   aiHints: '',
+  requiredPermissionIds: [],
+  persons: [],
+});
+
+export const newLocalizedPerson = (): LocalizedPerson => ({
+  personId: '',
+  requiredPermissionId: '',
 });
 
 export const newPerson = (): Person => ({
   id: `per.${shortId()}`,
   name: '',
   appearance: '',
+  personality: '',
   role: '',
   aiHints: '',
 });
@@ -73,7 +82,6 @@ export const newChapter = (position: number): Chapter => ({
   startLocationId: '',
   startTime: '',
   locationIds: [],
-  personIds: [],
   itemIds: [],
   tasks: [],
 });
