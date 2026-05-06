@@ -1,13 +1,9 @@
 package com.github.martinfrank.elitegames.aurealis.game;
 
-import com.github.martinfrank.elitegames.aurealis.adventure.Adventure;
-import com.github.martinfrank.elitegames.aurealis.adventure.Chapter;
-import com.github.martinfrank.elitegames.aurealis.adventure.Location;
-import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
+import com.github.martinfrank.elitegames.aurealis.adventure.*;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Session {
 
@@ -17,19 +13,27 @@ public class Session {
     private Location partyLocation;
     private String time;
     private List<Permission> permissions;
-    private Chapter chapter;
+    private final ChapterTracker tracker;
 
     public Session(Adventure adventure, Party party) {
         this.adventure = adventure;
-        adventure.chapters().sort(null);
+        tracker = new ChapterTracker(adventure);
         this.party = party;
         permissions = new ArrayList<>(adventure.permissions());
     }
 
 
     public void init() {
-        this.chapter = adventure.chapters().getFirst();
-        partyLocation = chapter.startLocation();
-        time = chapter.startTime();
+        Chapter start = tracker.getFirst();
+        startChapter(start);
+    }
+
+    private void startChapter(Chapter chapter) {
+        tracker.start(chapter, permissions);
+
+    }
+
+    public Object togglePermission(List<Permission> permissions){
+        return null;
     }
 }

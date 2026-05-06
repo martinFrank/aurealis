@@ -23,4 +23,8 @@ public record Chapter (
     public int compareTo(@NotNull Chapter c) {
         return Integer.compare(position, c.position());
     }
+
+    public enum State {
+        OPEN, IN_PROGRESS, DONE
+    }
 }
