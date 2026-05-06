@@ -4,7 +4,6 @@ export type Permission = {
   id: string;
   name: string;
   description: string;
-  grantCondition: string;
   state: PermissionState;
 };
 

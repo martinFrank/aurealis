@@ -79,7 +79,6 @@ export function parseAdventureXml(xml: string): Adventure {
       id: e.getAttribute('id') ?? '',
       name: text(e, 'name'),
       description: text(e, 'description'),
-      grantCondition: text(e, 'grantCondition'),
       state: (text(e, 'state') as PermissionState) || 'DENIED',
     }));
 

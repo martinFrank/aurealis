@@ -1,5 +1,7 @@
 package com.github.martinfrank.elitegames.aurealis.adventure;
 
+import com.github.martinfrank.elitegames.aurealis.game.Permissions;
+
 import java.util.List;
 
 public record Task(
@@ -17,9 +19,10 @@ public record Task(
         NOT_READY, IN_PROGRESS, COMPLETED, FAILED
     }
 
-    public State getState(List<Permission> permissions) {
-        for(Permission permission: requiredPermissions){
-            if (!permissions.contains(permission)){ //falls eine fehlt
+    public State getState(Permissions permissions) {
+        for(Permission required: requiredPermissions){
+            Permission permission = permissions.getById(required.id());
+            if (permission == null || permission.state() == Permission.State.DENIED ){ //falls eine fehlt
                 return State.NOT_READY;
             }
         }

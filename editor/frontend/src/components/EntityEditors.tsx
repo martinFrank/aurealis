@@ -179,19 +179,12 @@ export function PermissionCard({
           </select>
         </div>
       </div>
-      <div className="row">
+      <div className="row full">
         <div>
           <label>Description</label>
           <textarea
             value={value.description}
             onChange={(e) => onChange({ ...value, description: e.target.value })}
-          />
-        </div>
-        <div>
-          <label>Grant Condition</label>
-          <textarea
-            value={value.grantCondition}
-            onChange={(e) => onChange({ ...value, grantCondition: e.target.value })}
           />
         </div>
       </div>

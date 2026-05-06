@@ -23,7 +23,7 @@ public class ChapterTracker {
         return chapters.firstEntry().getKey();
     }
 
-    public void start(Chapter chapter, List<Permission> permissions) {
+    public void start(Chapter chapter, Permissions permissions) {
         //altes chapter ist done
         Chapter current = getInProgress();
         if (current != null) {
@@ -43,5 +43,9 @@ public class ChapterTracker {
 
     private Chapter getInProgress() {
         return chapters.entrySet().stream().filter(e -> e.getValue() == Chapter.State.IN_PROGRESS).map(Map.Entry::getKey).findFirst().orElse(null);
+    }
+
+    public void update(Permissions permissions) {
+        
     }
 }

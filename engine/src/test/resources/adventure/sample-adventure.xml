@@ -23,7 +23,11 @@
             <description>Storage area.</description>
             <aiHints>Crates everywhere.</aiHints>
             <requiredPermissions/>
-            <persons/>
+            <persons>
+                <localizedPerson>
+                    <personRef ref="per.engineer"/>
+                </localizedPerson>
+            </persons>
         </location>
     </locations>
     <persons>
@@ -54,13 +58,11 @@
         <permission id="prm.bridgeAccess">
             <name>Bridge access</name>
             <description>Allowed onto the bridge.</description>
-            <grantCondition>Captain unlocks the door.</grantCondition>
             <state>DENIED</state>
         </permission>
         <permission id="prm.beaconActivated">
             <name>Beacon activated</name>
             <description>The beacon is broadcasting.</description>
-            <grantCondition>Player activates the beacon.</grantCondition>
             <state>DENIED</state>
         </permission>
     </permissions>

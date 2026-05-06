@@ -200,7 +200,7 @@
     <xs:complexType name="LocalizedPersonType">
         <xs:sequence>
             <xs:element name="personRef" type="RefType"/>
-            <xs:element name="permissionRef" type="RefType"/>
+            <xs:element name="permissionRef" type="RefType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -263,7 +263,6 @@
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>
-            <xs:element name="grantCondition" type="xs:string"/>
             <xs:element name="state" type="PermissionStateType"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>

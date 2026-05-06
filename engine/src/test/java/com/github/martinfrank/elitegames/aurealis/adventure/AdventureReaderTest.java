@@ -74,6 +74,18 @@ class AdventureReaderTest {
     }
 
     @Test
+    void localizedPersonWithoutPermissionIsAccessible() throws IOException {
+        Adventure adventure = readSample();
+        Location cargo = findById(adventure.locations(), "loc.cargo", Location::id);
+        Person engineer = findById(adventure.persons(), "per.engineer", Person::id);
+
+        assertEquals(1, cargo.persons().size());
+        Location.LocalizedPerson lp = cargo.persons().get(0);
+        assertSame(engineer, lp.person());
+        assertEquals(null, lp.requiredPermission());
+    }
+
+    @Test
     void readsPersonFields() throws IOException {
         Adventure adventure = readSample();
         Person captain = findById(adventure.persons(), "per.captain", Person::id);

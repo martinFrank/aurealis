@@ -24,8 +24,7 @@ export function serializeAdventureXml(adventure: Adventure): string {
       const lpEl = appendChild(doc, personsContainer, 'localizedPerson');
       const pRef = appendChild(doc, lpEl, 'personRef');
       pRef.setAttribute('ref', lp.personId);
-      const permRef = appendChild(doc, lpEl, 'permissionRef');
-      permRef.setAttribute('ref', lp.requiredPermissionId);
+      appendOptionalRef(doc, lpEl, 'permissionRef', lp.requiredPermissionId);
     }
   }
 
@@ -56,7 +55,6 @@ export function serializeAdventureXml(adventure: Adventure): string {
     el.setAttribute('id', p.id);
     appendText(doc, el, 'name', p.name);
     appendText(doc, el, 'description', p.description);
-    appendText(doc, el, 'grantCondition', p.grantCondition);
     appendText(doc, el, 'state', p.state);
   }
 

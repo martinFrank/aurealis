@@ -115,7 +115,13 @@ public class AdventureReader {
             Element personRef = childElement(lpEl, "personRef");
             Element permRef = childElement(lpEl, "permissionRef");
             Person person = resolve(persons, personRef.getAttribute("ref"), "person");
-            Permission permission = resolve(permissions, permRef.getAttribute("ref"), "permission");
+            Permission permission = null;
+            if (permRef != null) {
+                String ref = permRef.getAttribute("ref");
+                if (ref != null && !ref.isEmpty()) {
+                    permission = resolve(permissions, ref, "permission");
+                }
+            }
             result.add(new Location.LocalizedPerson(person, permission));
         }
         return result;
@@ -166,7 +172,6 @@ public class AdventureReader {
                     id,
                     textOf(e, "name"),
                     textOf(e, "description"),
-                    textOf(e, "grantCondition"),
                     Permission.State.valueOf(textOf(e, "state"))
             ));
         }
