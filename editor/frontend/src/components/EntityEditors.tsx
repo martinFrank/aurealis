@@ -152,31 +152,14 @@ export function PermissionCard({
   onDelete: () => void;
 }) {
   return (
-    <EntityCard
-      id={value.id}
-      title={value.name}
-      subtitle={value.state}
-      onDelete={onDelete}
-    >
-      <div className="row">
+    <EntityCard id={value.id} title={value.name} onDelete={onDelete}>
+      <div className="row full">
         <div>
           <label>Name</label>
           <input
             value={value.name}
             onChange={(e) => onChange({ ...value, name: e.target.value })}
           />
-        </div>
-        <div>
-          <label>State</label>
-          <select
-            value={value.state}
-            onChange={(e) =>
-              onChange({ ...value, state: e.target.value as Permission['state'] })
-            }
-          >
-            <option value="GRANTED">GRANTED</option>
-            <option value="DENIED">DENIED</option>
-          </select>
         </div>
       </div>
       <div className="row full">

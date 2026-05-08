@@ -2,7 +2,6 @@ package com.github.martinfrank.elitegames.aurealis.game;
 
 import com.github.martinfrank.elitegames.aurealis.adventure.*;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
-import dev.langchain4j.agent.tool.P;
 
 import java.util.*;
 
@@ -33,13 +32,20 @@ public class Session {
         tracker.start(chapter, permissions);
     }
 
-
-    public Permissions getPermissions() {
-        return permissions;
-    }
-
     public PermissionUpdateResult grant(Permission permission) {
         permissions.grant(permission);
         return tracker.update(permissions);
+    }
+
+    public Chapter getCurrentChapter() {
+        return tracker.getInProgressChapter();
+    }
+
+    public List<Task> getCurrentTasks() {
+        return tracker.getInProgressTasks();
+    }
+
+    public void completeTask(Task task) {
+        tracker.completeTask(task);
     }
 }

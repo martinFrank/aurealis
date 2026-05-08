@@ -55,7 +55,6 @@ export function serializeAdventureXml(adventure: Adventure): string {
     el.setAttribute('id', p.id);
     appendText(doc, el, 'name', p.name);
     appendText(doc, el, 'description', p.description);
-    appendText(doc, el, 'state', p.state);
   }
 
   const cutScenes = appendChild(doc, root, 'cutScenes');

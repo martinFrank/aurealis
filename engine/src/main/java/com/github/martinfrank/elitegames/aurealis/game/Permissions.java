@@ -2,11 +2,14 @@ package com.github.martinfrank.elitegames.aurealis.game;
 
 import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Permissions {
 
     private final List<Permission> permissions;
+    private final Set<Permission> granted = new HashSet<>();
 
     public Permissions(List<Permission> permissions) {
         this.permissions = permissions;
@@ -27,8 +30,10 @@ public class Permissions {
     }
 
     public void grant(Permission permission) {
-        Permission granted = new Permission(permission.id(), permission.name(), permission.description(), Permission.State.GRANTED);
-        permissions.remove(permission);
-        permissions.add(granted);
+        granted.add(permission);
+    }
+
+    public boolean isGranted(Permission permission) {
+        return granted.contains(permission);
     }
 }

@@ -109,14 +109,6 @@ class AdventureReaderTest {
     }
 
     @Test
-    void readsPermissionState() throws IOException {
-        Adventure adventure = readSample();
-        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
-
-        assertEquals(Permission.State.DENIED, bridgeAccess.state());
-    }
-
-    @Test
     void chapterReferencesShareInstancesWithAdventureLevel() throws IOException {
         Adventure adventure = readSample();
         Chapter chapter = adventure.chapters().get(0);

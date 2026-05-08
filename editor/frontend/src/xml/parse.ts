@@ -6,7 +6,6 @@ import type {
   LocalizedPerson,
   Location,
   Permission,
-  PermissionState,
   Person,
   Task,
 } from '../types';
@@ -80,7 +79,6 @@ export function parseAdventureXml(xml: string): Adventure {
       id: e.getAttribute('id') ?? '',
       name: text(e, 'name'),
       description: text(e, 'description'),
-      state: (text(e, 'state') as PermissionState) || 'DENIED',
     }));
 
   const cutScenes: CutScene[] =

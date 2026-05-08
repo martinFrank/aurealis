@@ -24,7 +24,7 @@ public class ChapterTracker {
 
     public void start(Chapter chapter, Permissions permissions) {
         //altes chapter ist done
-        Chapter current = getInProgress();
+        Chapter current = getInProgressChapter();
         if (current != null) {
             chapters.put(current, Chapter.State.DONE);
         }
@@ -34,7 +34,7 @@ public class ChapterTracker {
         taskTracker = new TaskTracker(chapter, permissions);
     }
 
-    private Chapter getInProgress() {
+    Chapter getInProgressChapter() {
         return chapters.entrySet().stream()
                 .filter(e -> e.getValue() == Chapter.State.IN_PROGRESS)
                 .map(Map.Entry::getKey)
@@ -43,7 +43,7 @@ public class ChapterTracker {
     }
 
     public PermissionUpdateResult update(Permissions permissions) {
-        Chapter current = getInProgress();
+        Chapter current = getInProgressChapter();
         Optional<Chapter> candidate = chapters.entrySet().stream()
                 .filter(e -> e.getValue() != Chapter.State.DONE)
                 .filter(e -> e.getKey().isReady(permissions))
@@ -59,9 +59,19 @@ public class ChapterTracker {
         List<Task> candidates = taskTracker.getCurrentTasks(permissions);
         boolean equal = new HashSet<>(tasks).equals(new HashSet<>(candidates));
         if(!equal) {
-            return new PermissionUpdateResult(candidates);
+
+            List<TaskChange> tc = candidates.stream().map(t -> new TaskChange(t, Task.State.NOT_READY, Task.State.IN_PROGRESS)).toList();
+            return new PermissionUpdateResult(tc);
         }
 
         return new PermissionUpdateResult();
+    }
+
+    public List<Task> getInProgressTasks() {
+        return taskTracker.getCurrentTasks();
+    }
+
+    public void completeTask(Task task) {
+        taskTracker.complete(task);
     }
 }

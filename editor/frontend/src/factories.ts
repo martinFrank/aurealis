@@ -62,7 +62,6 @@ export const newPermission = (): Permission => ({
   id: `prm.${shortId()}`,
   name: '',
   description: '',
-  state: 'DENIED',
 });
 
 export const newCutScene = (): CutScene => ({

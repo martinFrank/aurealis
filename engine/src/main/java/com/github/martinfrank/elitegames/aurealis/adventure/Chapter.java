@@ -32,8 +32,7 @@ public record Chapter (
 
     public boolean isReady(Permissions permissions) {
         for(Permission required: requiredPermissions){
-            Permission permission = permissions.getById(required.id());
-            if (permission == null || permission.state() == Permission.State.DENIED ){ //falls eine fehlt
+            if (!permissions.isGranted(required)) { //falls eine fehlt
                 return false;
             }
         }

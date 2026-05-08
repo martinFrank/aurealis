@@ -2,13 +2,16 @@ package com.github.martinfrank.elitegames.aurealis.game;
 
 import com.github.martinfrank.elitegames.aurealis.AdventureLoader;
 import com.github.martinfrank.elitegames.aurealis.adventure.Adventure;
+import com.github.martinfrank.elitegames.aurealis.adventure.Chapter;
 import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
+import com.github.martinfrank.elitegames.aurealis.adventure.Task;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,13 +24,27 @@ class SessionTest {
 
         session.init();
 
+        Chapter currentChapter = session.getCurrentChapter();
+        System.out.println("current chapter: "+currentChapter.name());
 
-        Permissions permissions = session.getPermissions();
-        Permission permission = permissions.getByName("SUCHE_NACH_DEM_VATER");
-        Assertions.assertNotNull(permission);
+        List<Task> currentTasks = session.getCurrentTasks();
+        String tasksString = currentTasks.stream().map(Task::name).collect(Collectors.joining(", "));
+        System.out.println("current tasks: "+tasksString);
 
+        Task task = currentTasks.getFirst();
 
-        PermissionUpdateResult result = session.grant(permission);
+        System.out.println("complete task: "+task.name());
+        session.completeTask(task);
+        List<Permission> grantedPermissions = task.grantedPermissions();
+
+        for(Permission permission : grantedPermissions) {
+            PermissionUpdateResult result = session.grant(permission);
+            if(result.haveTasksChanged()){
+                for(TaskChange changedTask: result.taskChanges) {
+                    System.out.println("changed tasks: "+changedTask.task().name()+" from "+changedTask.oldState()+ " -> "+changedTask.newState());
+                }
+            }
+        }
 
         int i = 0;
 

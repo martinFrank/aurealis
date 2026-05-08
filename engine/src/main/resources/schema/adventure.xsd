@@ -270,7 +270,6 @@
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>
-            <xs:element name="state" type="PermissionStateType"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
     </xs:complexType>
@@ -278,12 +277,5 @@
     <xs:complexType name="RefType">
         <xs:attribute name="ref" type="xs:string" use="required"/>
     </xs:complexType>
-
-    <xs:simpleType name="PermissionStateType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="GRANTED"/>
-            <xs:enumeration value="DENIED"/>
-        </xs:restriction>
-    </xs:simpleType>
 
 </xs:schema>

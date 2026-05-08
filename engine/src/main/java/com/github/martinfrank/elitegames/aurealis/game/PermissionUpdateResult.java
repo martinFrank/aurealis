@@ -7,8 +7,8 @@ import java.util.List;
 
 public class PermissionUpdateResult {
 
-    private final Chapter chapter;
-    private final List<Task> tasks;
+    public final Chapter chapter;
+    public final List<TaskChange> taskChanges;
 
     public PermissionUpdateResult() {
         this(null, null);
@@ -17,13 +17,13 @@ public class PermissionUpdateResult {
     public PermissionUpdateResult(Chapter chapter) {
         this(chapter, null);
     }
-    public PermissionUpdateResult(List<Task> tasks) {
+    public PermissionUpdateResult(List<TaskChange> tasks) {
         this(null, tasks);
     }
 
-    private PermissionUpdateResult(Chapter chapter, List<Task> tasks) {
+    private PermissionUpdateResult(Chapter chapter, List<TaskChange> taskChanges) {
         this.chapter = chapter;
-        this.tasks = tasks;
+        this.taskChanges = taskChanges;
     }
 
     public boolean hasChapterChanged(){
@@ -31,10 +31,10 @@ public class PermissionUpdateResult {
     }
 
     public boolean haveTasksChanged(){
-        return this.tasks != null;
+        return this.taskChanges != null;
     }
 
     public boolean isUnchanged(){
-        return this.tasks == null && this.chapter == null;
+        return this.taskChanges == null && this.chapter == null;
     }
 }

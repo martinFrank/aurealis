@@ -171,8 +171,7 @@ public class AdventureReader {
             map.put(id, new Permission(
                     id,
                     textOf(e, "name"),
-                    textOf(e, "description"),
-                    Permission.State.valueOf(textOf(e, "state"))
+                    textOf(e, "description")
             ));
         }
         return map;

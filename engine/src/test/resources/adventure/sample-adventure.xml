@@ -58,12 +58,10 @@
         <permission id="prm.bridgeAccess">
             <name>Bridge access</name>
             <description>Allowed onto the bridge.</description>
-            <state>DENIED</state>
         </permission>
         <permission id="prm.beaconActivated">
             <name>Beacon activated</name>
             <description>The beacon is broadcasting.</description>
-            <state>DENIED</state>
         </permission>
     </permissions>
     <cutScenes>

@@ -96,22 +96,18 @@
     <permission id="prm.c709cfbd">
       <name>SUCHE_NACH_DEM_VATER</name>
       <description>Ihr habe die Rufe von einem verzweifelten Vater in der Taverne zum Tanzenden Ochsen gehört</description>
-      <state>DENIED</state>
     </permission>
     <permission id="prm.a0763b13">
       <name>VERZWEIFELTER_VATER_DARF_EINTRETEN</name>
       <description>Wenn die Helden in der Taverne zum Tanzenden Stier etwas Zeit verbracht haben, darf der verzweifelte Vater erscheinen</description>
-      <state>DENIED</state>
     </permission>
     <permission id="prm.03b083b0">
       <name>SUCHE_IM_WEISSEN_WALFISCH</name>
       <description>Die Helden können jetzt den Ort Weisser Walfisch betreten und dort nach inweisen suchen</description>
-      <state>DENIED</state>
     </permission>
     <permission id="prm.0ec96958">
       <name>BEREIT_FUER_CHAPTER_2</name>
       <description>Wenn die Helden erfahren haben, dass der verzweifelte Vater Arberd Vronfelden heisst, können sie im zweiten Kapitel weiter machen</description>
-      <state>DENIED</state>
     </permission>
   </permissions>
   <cutScenes>

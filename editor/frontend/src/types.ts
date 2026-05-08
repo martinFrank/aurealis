@@ -1,10 +1,7 @@
-export type PermissionState = 'GRANTED' | 'DENIED';
-
 export type Permission = {
   id: string;
   name: string;
   description: string;
-  state: PermissionState;
 };
 
 export type LocalizedPerson = {

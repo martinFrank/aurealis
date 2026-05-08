@@ -32,7 +32,19 @@ public class TaskTracker {
     //welche tasks wären bei diesen permission in progress?
     public List<Task> getCurrentTasks(Permissions permissions) {
         return tasks.keySet().stream()
-                .filter(t -> t.getState(permissions) == Task.State.IN_PROGRESS)
+                .filter(t -> t.getState(permissions) == Task.State.IN_PROGRESS && tasks.get(t).equals(Task.State.NOT_READY))
                 .toList();
+    }
+
+    public void getInProgress() {
+
+    }
+
+    public void complete(Task task) {
+        tasks.put(task, Task.State.COMPLETED);
+    }
+
+    public Task.State getState(Task task) {
+        return tasks.get(task);
     }
 }
