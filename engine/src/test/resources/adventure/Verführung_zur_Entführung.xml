@@ -7,10 +7,10 @@
     <location id="loc.36f9b376">
       <name>Waffenladen zur Eiserne Jungfrau</name>
       <description>Die Eiserne Jungfrau befindet sich in einem kleinen, aber gut gepflegten Gebäude mit schwarzem Fachwerk und einem steilen Dach aus roten Ziegeln. Über der Tür prangt ein wunderschönes Schild mit dem Bild einer Jungfrau, die einen Schwert schmiedet. Die Fenster sind mit Eisenbarren gesichert und die Tür selbst ist stark und gut verriegelt.
-                        
-                  Als du in den Laden gehst, bemerkst du sofort die Vielfalt an Waffen und Rüstungen, die von den Wänden bis zum Boden reichen. Es riecht nach Schmiedehitze, Öl und Metall. Du wirst von Angrella selbst begrüßt, einer erfahrenen und ehrbaren Schmiedin mit einem warmen Lächeln.
-                  
-                  Der Laden bietet eine breite Palette an Waffen und Rüstungen.</description>
+                                    
+                              Als du in den Laden gehst, bemerkst du sofort die Vielfalt an Waffen und Rüstungen, die von den Wänden bis zum Boden reichen. Es riecht nach Schmiedehitze, Öl und Metall. Du wirst von Angrella selbst begrüßt, einer erfahrenen und ehrbaren Schmiedin mit einem warmen Lächeln.
+                              
+                              Der Laden bietet eine breite Palette an Waffen und Rüstungen.</description>
       <aiHints>hier können die Helden Waffen und Rüstungen kaufen. die Preise sind hier höher, weil die qualität besser ist und weil sich der Laden im herzen der Kaiserstadt Gareth befindent, nicht in der Provinz</aiHints>
       <requiredPermissions/>
       <persons>
@@ -22,8 +22,8 @@
     <location id="loc.3c0152a3">
       <name>Zentraler Platz im Handelsviertel</name>
       <description>Der Marktplatz liegt inmitten der Kaiserstadt und ist der Herzpunkt aller Aktivitäten. Er wird von einem großen, prächtigen Brunnen dominiert, der mit Figuren aus Bronze geschmückt ist. Die Wasserstrahlen des Brunnens springen aufwärts in einem bunten Spiel aus Licht und Wasser, beleuchtet durch das sanfte Licht, das von den umliegenden Gebäuden reflektiert wird. Um den Marktplatz herum stehen prachtvolle Gebäude, in denen sich luxuriöse Geschäfte, Gasthöfe und sogar das königliche Amt befinden
-                        
-                  Der Platz ist ein Treffpunkt für alle Schichten der Gesellschaft. An den Ständen des Marktes bietet man alles vom frischesten Obst und Gemüse bis hin zu hochwertigen Edelsteinen an. Die Atmosphäre ist lebendig, mit dem Läuten von Glöckchen bei jedem neuen Kauf, den Gesang der Händlerinnen beim Verkauf ihrer Waren und das Gelächter des Volksgeschehens.</description>
+                                    
+                              Der Platz ist ein Treffpunkt für alle Schichten der Gesellschaft. An den Ständen des Marktes bietet man alles vom frischesten Obst und Gemüse bis hin zu hochwertigen Edelsteinen an. Die Atmosphäre ist lebendig, mit dem Läuten von Glöckchen bei jedem neuen Kauf, den Gesang der Händlerinnen beim Verkauf ihrer Waren und das Gelächter des Volksgeschehens.</description>
       <aiHints>Hier können die Helden allgemeine Gegenstände erwerben, Obst und Gemüse, Fleisch, Haushaltsartikel etc. Wenn nötig kannst du hier eine Person temporär erstellen (Händler, Bettler, Kinder edelleute, Spielleute etc)</aiHints>
       <requiredPermissions/>
       <persons/>

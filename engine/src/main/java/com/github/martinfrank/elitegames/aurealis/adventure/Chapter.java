@@ -1,5 +1,6 @@
 package com.github.martinfrank.elitegames.aurealis.adventure;
 
+import com.github.martinfrank.elitegames.aurealis.game.Permissions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -26,6 +27,16 @@ public record Chapter (
     }
 
     public enum State {
-        OPEN, IN_PROGRESS, DONE
+        NOT_READY, OPEN, IN_PROGRESS, DONE;
+    }
+
+    public boolean isReady(Permissions permissions) {
+        for(Permission required: requiredPermissions){
+            Permission permission = permissions.getById(required.id());
+            if (permission == null || permission.state() == Permission.State.DENIED ){ //falls eine fehlt
+                return false;
+            }
+        }
+        return true;
     }
 }

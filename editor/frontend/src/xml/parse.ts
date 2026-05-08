@@ -10,6 +10,7 @@ import type {
   Person,
   Task,
 } from '../types';
+import { sanitizeAdventure } from '../sanitize';
 
 const NS = 'https://github.com/martinfrank/elitegames/aurealis/adventure';
 
@@ -106,7 +107,7 @@ export function parseAdventureXml(xml: string): Adventure {
       endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
     }));
 
-  return {
+  return sanitizeAdventure({
     title: text(root, 'title'),
     description: text(root, 'description'),
     author: text(root, 'author'),
@@ -116,7 +117,7 @@ export function parseAdventureXml(xml: string): Adventure {
     permissions,
     cutScenes,
     chapters,
-  };
+  });
 }
 
 function parseLocalizedPersons(locationEl: Element): LocalizedPerson[] {

@@ -2,7 +2,6 @@ package com.github.martinfrank.elitegames.aurealis.game;
 
 import com.github.martinfrank.elitegames.aurealis.adventure.Adventure;
 import com.github.martinfrank.elitegames.aurealis.adventure.Chapter;
-import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
 import com.github.martinfrank.elitegames.aurealis.adventure.Task;
 
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.*;
 public class ChapterTracker {
 
     private final SequencedMap<Chapter, Chapter.State> chapters = new TreeMap<>();
-    private Map<Task, Task.State> tasks = new HashMap<>();
+    private TaskTracker taskTracker;
 
     public ChapterTracker(Adventure adventure) {
         adventure.chapters().sort(null);
@@ -32,20 +31,37 @@ public class ChapterTracker {
 
         //neues chapter auf in progress
         chapters.put(chapter, Chapter.State.IN_PROGRESS);
-
-        //taskliste aktualisieren
-        tasks.clear();
-        for(Task task: chapter.tasks()){
-            Task.State state = task.getState(permissions);
-            tasks.put(task, state);
-        }
+        taskTracker = new TaskTracker(chapter, permissions);
     }
 
     private Chapter getInProgress() {
-        return chapters.entrySet().stream().filter(e -> e.getValue() == Chapter.State.IN_PROGRESS).map(Map.Entry::getKey).findFirst().orElse(null);
+        return chapters.entrySet().stream()
+                .filter(e -> e.getValue() == Chapter.State.IN_PROGRESS)
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
 
-    public void update(Permissions permissions) {
-        
+    public PermissionUpdateResult update(Permissions permissions) {
+        Chapter current = getInProgress();
+        Optional<Chapter> candidate = chapters.entrySet().stream()
+                .filter(e -> e.getValue() != Chapter.State.DONE)
+                .filter(e -> e.getKey().isReady(permissions))
+                .findFirst()
+                .map(Map.Entry::getKey);
+
+        if (candidate.isPresent() && !candidate.get().equals(current)) {
+            start(candidate.get(), permissions);
+            return new PermissionUpdateResult(candidate.get());
+        }
+
+        List<Task> tasks = taskTracker.getCurrentTasks();
+        List<Task> candidates = taskTracker.getCurrentTasks(permissions);
+        boolean equal = new HashSet<>(tasks).equals(new HashSet<>(candidates));
+        if(!equal) {
+            return new PermissionUpdateResult(candidates);
+        }
+
+        return new PermissionUpdateResult();
     }
 }

@@ -33,16 +33,13 @@ public class Session {
         tracker.start(chapter, permissions);
     }
 
-    public Object togglePermission(Permissions permissions){
-        return null;
-    }
 
     public Permissions getPermissions() {
         return permissions;
     }
 
-    public void grant(Permission permission) {
+    public PermissionUpdateResult grant(Permission permission) {
         permissions.grant(permission);
-        tracker.update(permissions);
+        return tracker.update(permissions);
     }
 }

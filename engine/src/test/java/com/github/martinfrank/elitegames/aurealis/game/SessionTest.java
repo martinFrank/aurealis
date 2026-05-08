@@ -21,13 +21,13 @@ class SessionTest {
 
         session.init();
 
+
         Permissions permissions = session.getPermissions();
         Permission permission = permissions.getByName("SUCHE_NACH_DEM_VATER");
         Assertions.assertNotNull(permission);
 
-        permissions.grant(permission);//FIXME müsste bei session sein
-        session.grant(permission);
-        session.togglePermission(permissions);
+
+        PermissionUpdateResult result = session.grant(permission);
 
         int i = 0;
 

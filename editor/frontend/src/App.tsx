@@ -11,6 +11,7 @@ import {
 } from './factories';
 import { parseAdventureXml } from './xml/parse';
 import { serializeAdventureXml } from './xml/serialize';
+import { sanitizeAdventure } from './sanitize';
 import { Section } from './components/Section';
 import {
   CutSceneCard,
@@ -20,6 +21,14 @@ import {
 } from './components/EntityEditors';
 import { LocationCard } from './components/LocationCard';
 import { ChapterCard } from './components/ChapterCard';
+
+const CASCADING_KEYS: ReadonlySet<keyof Adventure> = new Set([
+  'permissions',
+  'persons',
+  'items',
+  'locations',
+  'cutScenes',
+]);
 
 export default function App() {
   const [adventure, setAdventure] = useState<Adventure>(newAdventure);
@@ -41,7 +50,8 @@ export default function App() {
   const removeAt = (key: keyof Adventure, idx: number) => {
     const list = (adventure[key] as unknown[]).slice();
     list.splice(idx, 1);
-    setAdventure({ ...adventure, [key]: list } as Adventure);
+    const next = { ...adventure, [key]: list } as Adventure;
+    setAdventure(CASCADING_KEYS.has(key) ? sanitizeAdventure(next) : next);
   };
 
   const onImport = async (file: File) => {
