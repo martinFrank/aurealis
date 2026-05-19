@@ -112,7 +112,15 @@
       <aiHints/>
     </person>
   </persons>
-  <items/>
+  <items>
+    <item id="itm.e178a246">
+      <name>Entführer-Brief</name>
+      <appearance>Lieber Vater. 
+Ich bin von zwei Räubern gekidnappt worden. Sie zwingen mich, Dir diesen Brief zu schreiben um Dir mitzuteilen, daß ich tot sein werde, wenn nicht morgen abend ein Beutel mit 5000 Dukaten bereit steht. Wie die Übergabe des Geldes und meine Freilassung arrangiert werden, wird Dir in einem weiteren Schreiben mitgeteilt.</appearance>
+      <purpose/>
+      <aiHints/>
+    </item>
+  </items>
   <taskPredicates/>
   <cutScenes>
     <cutScene id="cs.39ba89d5">

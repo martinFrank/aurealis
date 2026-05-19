@@ -11,6 +11,7 @@ public class LlmProvider {
     private static final String OLLAMA_URL = "http://192.168.0.251:11434";
     //    private static final String MODEL = "qwen3:30b";
 //    private static final String MODEL = "qwen2.5:7b"; //gut
+//    private static final String MODEL = "qwen2.5:7b-instruct";
     private static final String MODEL = "llama3.1:8b"; //gut
 //    private static final String MODEL = "qwen3:32b"; //von cahtgpt empfohlen - SPILL
 

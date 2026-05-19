@@ -27,6 +27,7 @@ public class Session {
 
     public void init() {
         Chapter start = tracker.getFirst();
+        party.setLocation(start.startLocation());
         startChapter(start);
     }
 
@@ -49,5 +50,9 @@ public class Session {
 
     public void completeTask(Task task) {
         tracker.completeTask(task);
+    }
+
+    public Party getParty() {
+        return party;
     }
 }

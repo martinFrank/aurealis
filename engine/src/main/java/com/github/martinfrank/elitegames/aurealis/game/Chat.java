@@ -11,7 +11,7 @@ public class Chat {
     private static final Logger LOG = LoggerFactory.getLogger(Chat.class);
 
     public enum Role {
-        CUT_SCENE
+        CUT_SCENE, PLAYER, GAME_MASTER
     }
 
     private final List<ChatEntry> history = new ArrayList<>();
@@ -20,6 +20,11 @@ public class Chat {
         String trim = message.replace("\t", "");
         history.add(new ChatEntry(role, trim));
         LOG.info(trim);
+    }
+
+    public List<ChatEntry> recentHistory(int max) {
+        int start = Math.max(0, history.size() - max);
+        return List.copyOf(history.subList(start, history.size()));
     }
 
 }
