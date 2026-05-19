@@ -11,7 +11,7 @@ type Props = {
 };
 
 export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
-  const permOpts = adventure.permissions.map((p) => ({ id: p.id, label: p.name }));
+  const predOpts = adventure.taskPredicates.map((p) => ({ id: p.id, label: p.name }));
   const personOpts = adventure.persons.map((p) => ({ id: p.id, label: p.name }));
 
   const updateLp = (idx: number, lp: LocalizedPerson) => {
@@ -31,7 +31,7 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
   };
 
   const counts: string[] = [];
-  if (value.requiredPermissionIds.length) counts.push(`${value.requiredPermissionIds.length} Perm`);
+  if (value.requiredTaskPredicateIds.length) counts.push(`${value.requiredTaskPredicateIds.length} Pred`);
   if (value.persons.length) counts.push(`${value.persons.length} Person`);
   const subtitle = counts.join(' · ');
 
@@ -69,10 +69,10 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
       </div>
       <div className="row full">
         <RefMultiSelect
-          label="Required Permissions (Zutritt)"
-          options={permOpts}
-          selectedIds={value.requiredPermissionIds}
-          onChange={(ids) => onChange({ ...value, requiredPermissionIds: ids })}
+          label="Required Task Predicates (Zutritt)"
+          options={predOpts}
+          selectedIds={value.requiredTaskPredicateIds}
+          onChange={(ids) => onChange({ ...value, requiredTaskPredicateIds: ids })}
         />
       </div>
 
@@ -87,10 +87,10 @@ export function LocationCard({ value, adventure, onChange, onDelete }: Props) {
               onChange={(id) => updateLp(idx, { ...lp, personId: id })}
             />
             <RefSelect
-              label="Required Permission"
-              options={permOpts}
-              selectedId={lp.requiredPermissionId}
-              onChange={(id) => updateLp(idx, { ...lp, requiredPermissionId: id })}
+              label="Required Task Predicate"
+              options={predOpts}
+              selectedId={lp.requiredTaskPredicateId}
+              onChange={(id) => updateLp(idx, { ...lp, requiredTaskPredicateId: id })}
             />
             <button className="danger" onClick={() => removeLp(idx)}>
               entfernen

@@ -14,7 +14,7 @@ type Props = {
 export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
   const locOpts = adventure.locations.map((l) => ({ id: l.id, label: l.name }));
   const itmOpts = adventure.items.map((i) => ({ id: i.id, label: i.name }));
-  const permOpts = adventure.permissions.map((p) => ({ id: p.id, label: p.name }));
+  const predOpts = adventure.taskPredicates.map((p) => ({ id: p.id, label: p.name }));
   const csOpts = adventure.cutScenes.map((c) => ({ id: c.id, label: c.name }));
 
   const updateTask = (idx: number, updated: Task) => {
@@ -114,10 +114,10 @@ export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
 
       <div className="row full">
         <RefMultiSelect
-          label="Required Permissions (Zutritt)"
-          options={permOpts}
-          selectedIds={value.requiredPermissionIds}
-          onChange={(ids) => onChange({ ...value, requiredPermissionIds: ids })}
+          label="Required Task Predicates (Zutritt)"
+          options={predOpts}
+          selectedIds={value.requiredTaskPredicateIds}
+          onChange={(ids) => onChange({ ...value, requiredTaskPredicateIds: ids })}
         />
       </div>
 
@@ -142,7 +142,7 @@ export function ChapterCard({ value, adventure, onChange, onDelete }: Props) {
           <TaskCard
             key={t.id}
             value={t}
-            permissions={adventure.permissions}
+            taskPredicates={adventure.taskPredicates}
             cutScenes={adventure.cutScenes}
             onChange={(u) => updateTask(idx, u)}
             onDelete={() => removeTask(idx)}

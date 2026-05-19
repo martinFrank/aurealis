@@ -1,4 +1,4 @@
-import type { CutScene, Item, Permission, Person } from '../types';
+import type { CutScene, Item, Person, TaskPredicate } from '../types';
 import { EntityCard } from './EntityCard';
 
 export function PersonCard({
@@ -142,13 +142,13 @@ export function CutSceneCard({
   );
 }
 
-export function PermissionCard({
+export function TaskPredicateCard({
   value,
   onChange,
   onDelete,
 }: {
-  value: Permission;
-  onChange: (v: Permission) => void;
+  value: TaskPredicate;
+  onChange: (v: TaskPredicate) => void;
   onDelete: () => void;
 }) {
   return (

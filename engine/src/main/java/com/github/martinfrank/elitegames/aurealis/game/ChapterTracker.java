@@ -22,7 +22,7 @@ public class ChapterTracker {
         return chapters.firstEntry().getKey();
     }
 
-    public void start(Chapter chapter, Permissions permissions) {
+    public void start(Chapter chapter, TaskPredicates taskPredicates) {
         //altes chapter ist done
         Chapter current = getInProgressChapter();
         if (current != null) {
@@ -31,7 +31,7 @@ public class ChapterTracker {
 
         //neues chapter auf in progress
         chapters.put(chapter, Chapter.State.IN_PROGRESS);
-        taskTracker = new TaskTracker(chapter, permissions);
+        taskTracker = new TaskTracker(chapter, taskPredicates);
     }
 
     Chapter getInProgressChapter() {
@@ -42,29 +42,29 @@ public class ChapterTracker {
                 .orElse(null);
     }
 
-    public PermissionUpdateResult update(Permissions permissions) {
+    public TaskPredicateUpdateResult update(TaskPredicates taskPredicates) {
         Chapter current = getInProgressChapter();
         Optional<Chapter> candidate = chapters.entrySet().stream()
                 .filter(e -> e.getValue() != Chapter.State.DONE)
-                .filter(e -> e.getKey().isReady(permissions))
+                .filter(e -> e.getKey().isReady(taskPredicates))
                 .findFirst()
                 .map(Map.Entry::getKey);
 
         if (candidate.isPresent() && !candidate.get().equals(current)) {
-            start(candidate.get(), permissions);
-            return new PermissionUpdateResult(candidate.get());
+            start(candidate.get(), taskPredicates);
+            return new TaskPredicateUpdateResult(candidate.get());
         }
 
         List<Task> tasks = taskTracker.getCurrentTasks();
-        List<Task> candidates = taskTracker.getCurrentTasks(permissions);
+        List<Task> candidates = taskTracker.getCurrentTasks(taskPredicates);
         boolean equal = new HashSet<>(tasks).equals(new HashSet<>(candidates));
         if(!equal) {
 
             List<TaskChange> tc = candidates.stream().map(t -> new TaskChange(t, Task.State.NOT_READY, Task.State.IN_PROGRESS)).toList();
-            return new PermissionUpdateResult(tc);
+            return new TaskPredicateUpdateResult(tc);
         }
 
-        return new PermissionUpdateResult();
+        return new TaskPredicateUpdateResult();
     }
 
     public List<Task> getInProgressTasks() {

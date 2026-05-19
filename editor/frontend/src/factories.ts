@@ -5,9 +5,9 @@ import type {
   Item,
   LocalizedPerson,
   Location,
-  Permission,
   Person,
   Task,
+  TaskPredicate,
 } from './types';
 
 const shortId = () =>
@@ -22,7 +22,7 @@ export const newAdventure = (): Adventure => ({
   locations: [],
   persons: [],
   items: [],
-  permissions: [],
+  taskPredicates: [],
   cutScenes: [],
   chapters: [],
 });
@@ -32,13 +32,13 @@ export const newLocation = (): Location => ({
   name: '',
   description: '',
   aiHints: '',
-  requiredPermissionIds: [],
+  requiredTaskPredicateIds: [],
   persons: [],
 });
 
 export const newLocalizedPerson = (): LocalizedPerson => ({
   personId: '',
-  requiredPermissionId: '',
+  requiredTaskPredicateId: '',
 });
 
 export const newPerson = (): Person => ({
@@ -58,7 +58,7 @@ export const newItem = (): Item => ({
   aiHints: '',
 });
 
-export const newPermission = (): Permission => ({
+export const newTaskPredicate = (): TaskPredicate => ({
   id: `prm.${shortId()}`,
   name: '',
   description: '',
@@ -76,8 +76,8 @@ export const newTask = (): Task => ({
   description: '',
   purpose: '',
   required: false,
-  requiredPermissionIds: [],
-  grantedPermissionIds: [],
+  requiredTaskPredicateIds: [],
+  grantedTaskPredicateIds: [],
   startCutSceneId: '',
   endCutSceneId: '',
 });
@@ -93,7 +93,7 @@ export const newChapter = (position: number): Chapter => ({
   locationIds: [],
   itemIds: [],
   tasks: [],
-  requiredPermissionIds: [],
+  requiredTaskPredicateIds: [],
   startCutSceneId: '',
   endCutSceneId: '',
 });

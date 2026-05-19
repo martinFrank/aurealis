@@ -1,7 +1,7 @@
 import type { Adventure, Chapter, LocalizedPerson, Location, Task } from './types';
 
 export function sanitizeAdventure(adventure: Adventure): Adventure {
-  const permIds = new Set(adventure.permissions.map((p) => p.id));
+  const predIds = new Set(adventure.taskPredicates.map((p) => p.id));
   const personIds = new Set(adventure.persons.map((p) => p.id));
   const itemIds = new Set(adventure.items.map((i) => i.id));
   const locationIds = new Set(adventure.locations.map((l) => l.id));
@@ -15,13 +15,13 @@ export function sanitizeAdventure(adventure: Adventure): Adventure {
 
   const locations: Location[] = adventure.locations.map((l) => ({
     ...l,
-    requiredPermissionIds: keepIds(l.requiredPermissionIds, permIds),
+    requiredTaskPredicateIds: keepIds(l.requiredTaskPredicateIds, predIds),
     persons: l.persons
       .filter((lp) => personIds.has(lp.personId))
       .map(
         (lp): LocalizedPerson => ({
           ...lp,
-          requiredPermissionId: keepOrEmpty(lp.requiredPermissionId, permIds),
+          requiredTaskPredicateId: keepOrEmpty(lp.requiredTaskPredicateId, predIds),
         }),
       ),
   }));
@@ -31,14 +31,14 @@ export function sanitizeAdventure(adventure: Adventure): Adventure {
     startLocationId: keepOrEmpty(c.startLocationId, locationIds),
     locationIds: keepIds(c.locationIds, locationIds),
     itemIds: keepIds(c.itemIds, itemIds),
-    requiredPermissionIds: keepIds(c.requiredPermissionIds, permIds),
+    requiredTaskPredicateIds: keepIds(c.requiredTaskPredicateIds, predIds),
     startCutSceneId: keepOrEmpty(c.startCutSceneId, cutSceneIds),
     endCutSceneId: keepOrEmpty(c.endCutSceneId, cutSceneIds),
     tasks: c.tasks.map(
       (t): Task => ({
         ...t,
-        requiredPermissionIds: keepIds(t.requiredPermissionIds, permIds),
-        grantedPermissionIds: keepIds(t.grantedPermissionIds, permIds),
+        requiredTaskPredicateIds: keepIds(t.requiredTaskPredicateIds, predIds),
+        grantedTaskPredicateIds: keepIds(t.grantedTaskPredicateIds, predIds),
         startCutSceneId: keepOrEmpty(t.startCutSceneId, cutSceneIds),
         endCutSceneId: keepOrEmpty(t.endCutSceneId, cutSceneIds),
       }),

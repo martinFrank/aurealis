@@ -15,11 +15,11 @@ Abenteuer werden im **Editor** (`editor/frontend`, React + TypeScript) erfasst o
 
 ### Adventure-Modell: zentrale Definition, Referenzen pro Chapter
 
-`Locations`, `Persons`, `Items` und `Permissions` werden **einmalig auf Adventure-Ebene** definiert. Chapter referenzieren diese Entitäten nur per ID — sie definieren sie nicht selbst neu.
+`Locations`, `Persons`, `Items` und `TaskPredicates` werden **einmalig auf Adventure-Ebene** definiert. Chapter referenzieren diese Entitäten nur per ID — sie definieren sie nicht selbst neu.
 
-- Adventure (`engine/.../adventure/Adventure.java`) hält die kanonischen Listen: `locations`, `persons`, `items`, `permissions`.
+- Adventure (`engine/.../adventure/Adventure.java`) hält die kanonischen Listen: `locations`, `persons`, `items`, `taskPredicates`.
 - Chapter (`engine/.../adventure/Chapter.java`) hält Referenzen auf eine Teilmenge dieser Entitäten plus eigene `tasks` (Tasks sind chapter-lokal).
-- Im XSD-Schema (`engine/src/main/resources/schema/adventure.xsd`) wird das über `xs:key` (auf Adventure-Ebene) und `xs:keyref` (in den Chapter-Listen `locationRef`, `personRef`, `itemRef`) abgebildet. Permission-Refs in Tasks zeigen ebenfalls auf die Adventure-weite Permission-Liste.
+- Im XSD-Schema (`engine/src/main/resources/schema/adventure.xsd`) wird das über `xs:key` (auf Adventure-Ebene) und `xs:keyref` (in den Chapter-Listen `locationRef`, `personRef`, `itemRef`) abgebildet. TaskPredicate-Refs in Tasks zeigen ebenfalls auf die Adventure-weite TaskPredicate-Liste.
 
 **Warum:** Die gleiche Person/Location/Item kann in mehreren Chaptern auftauchen — eine zentrale Definition vermeidet Duplikate und macht Konsistenzänderungen trivial. Tasks bleiben chapter-lokal, weil sie zum Handlungsbogen eines Chapters gehören und nicht wiederverwendet werden.
 

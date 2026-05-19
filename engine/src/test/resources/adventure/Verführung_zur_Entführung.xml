@@ -7,12 +7,12 @@
     <location id="loc.36f9b376">
       <name>Waffenladen zur Eiserne Jungfrau</name>
       <description>Die Eiserne Jungfrau befindet sich in einem kleinen, aber gut gepflegten Gebäude mit schwarzem Fachwerk und einem steilen Dach aus roten Ziegeln. Über der Tür prangt ein wunderschönes Schild mit dem Bild einer Jungfrau, die einen Schwert schmiedet. Die Fenster sind mit Eisenbarren gesichert und die Tür selbst ist stark und gut verriegelt.
-                                    
-                              Als du in den Laden gehst, bemerkst du sofort die Vielfalt an Waffen und Rüstungen, die von den Wänden bis zum Boden reichen. Es riecht nach Schmiedehitze, Öl und Metall. Du wirst von Angrella selbst begrüßt, einer erfahrenen und ehrbaren Schmiedin mit einem warmen Lächeln.
-                              
-                              Der Laden bietet eine breite Palette an Waffen und Rüstungen.</description>
+                                                
+                                          Als du in den Laden gehst, bemerkst du sofort die Vielfalt an Waffen und Rüstungen, die von den Wänden bis zum Boden reichen. Es riecht nach Schmiedehitze, Öl und Metall. Du wirst von Angrella selbst begrüßt, einer erfahrenen und ehrbaren Schmiedin mit einem warmen Lächeln.
+                                          
+                                          Der Laden bietet eine breite Palette an Waffen und Rüstungen.</description>
       <aiHints>hier können die Helden Waffen und Rüstungen kaufen. die Preise sind hier höher, weil die qualität besser ist und weil sich der Laden im herzen der Kaiserstadt Gareth befindent, nicht in der Provinz</aiHints>
-      <requiredPermissions/>
+      <requiredTaskPredicates/>
       <persons>
         <localizedPerson>
           <personRef ref="per.ad53f9ed"/>
@@ -22,17 +22,17 @@
     <location id="loc.3c0152a3">
       <name>Zentraler Platz im Handelsviertel</name>
       <description>Der Marktplatz liegt inmitten der Kaiserstadt und ist der Herzpunkt aller Aktivitäten. Er wird von einem großen, prächtigen Brunnen dominiert, der mit Figuren aus Bronze geschmückt ist. Die Wasserstrahlen des Brunnens springen aufwärts in einem bunten Spiel aus Licht und Wasser, beleuchtet durch das sanfte Licht, das von den umliegenden Gebäuden reflektiert wird. Um den Marktplatz herum stehen prachtvolle Gebäude, in denen sich luxuriöse Geschäfte, Gasthöfe und sogar das königliche Amt befinden
-                                    
-                              Der Platz ist ein Treffpunkt für alle Schichten der Gesellschaft. An den Ständen des Marktes bietet man alles vom frischesten Obst und Gemüse bis hin zu hochwertigen Edelsteinen an. Die Atmosphäre ist lebendig, mit dem Läuten von Glöckchen bei jedem neuen Kauf, den Gesang der Händlerinnen beim Verkauf ihrer Waren und das Gelächter des Volksgeschehens.</description>
+                                                
+                                          Der Platz ist ein Treffpunkt für alle Schichten der Gesellschaft. An den Ständen des Marktes bietet man alles vom frischesten Obst und Gemüse bis hin zu hochwertigen Edelsteinen an. Die Atmosphäre ist lebendig, mit dem Läuten von Glöckchen bei jedem neuen Kauf, den Gesang der Händlerinnen beim Verkauf ihrer Waren und das Gelächter des Volksgeschehens.</description>
       <aiHints>Hier können die Helden allgemeine Gegenstände erwerben, Obst und Gemüse, Fleisch, Haushaltsartikel etc. Wenn nötig kannst du hier eine Person temporär erstellen (Händler, Bettler, Kinder edelleute, Spielleute etc)</aiHints>
-      <requiredPermissions/>
+      <requiredTaskPredicates/>
       <persons/>
     </location>
     <location id="loc.2b1689b8">
       <name>Taverne zum tanzenden Stier</name>
       <description>Die Taverne liegt im Herzen von Gareth und ist durch seine schwere Holztür zu erreichen. An den Wänden hängen Fackeln und ein paar Gemälde von Rittern in silbernen Rüstungen, die einen kräftigen, historischen Einfluss verbreiten. Der Boden ist mit einer dicken Schicht Stroh bedeckt, das Geräusch von Schritten darauf dringt an die Ohren der Besucher. Es herrscht eine gute Stimmung und es wird viel getrunken. Der Wirt vom Tanzenden Stier heisst Romosch, er pflegt die Taverne gut.</description>
       <aiHints/>
-      <requiredPermissions/>
+      <requiredTaskPredicates/>
       <persons>
         <localizedPerson>
           <personRef ref="per.7ed99abe"/>
@@ -43,7 +43,7 @@
       <name>Taverne Weisser Walfisch</name>
       <description>Die Taverne ist ein alter Steinbau mit einem spitzen Dach und einer großen Eingangstür, über der das Wappen eines weissen Wals in schwarzem Holz prangt. Drinnen herrscht eine gemütliche Atmosphäre: die Mauern sind mit Fellen tapeziert, die Tische sind von Lampen beleuchtet und die Luft ist dick von dem Duft von Bratfleisch und Bier. Der Wirt selbst, ein gutmütiger Mann namens Gundolf, bedient seine Gäste gerne mit einem Lächeln und einer Geschichte, sobald er Zeit dazu findet.</description>
       <aiHints>An der Theke sitzt Bjoern Skaldottir, er weiss wer der gesuchte Vater ist. Der Wirt Gundolf Attermen weiss auch, wer der verzweifelte Vater ist.</aiHints>
-      <requiredPermissions/>
+      <requiredTaskPredicates/>
       <persons>
         <localizedPerson>
           <personRef ref="per.7d5f0de4"/>
@@ -52,6 +52,13 @@
           <personRef ref="per.f688dba7"/>
         </localizedPerson>
       </persons>
+    </location>
+    <location id="loc.e68ea272">
+      <name>Schusterei „Bundischuh“</name>
+      <description/>
+      <aiHints/>
+      <requiredTaskPredicates/>
+      <persons/>
     </location>
   </locations>
   <persons>
@@ -90,26 +97,23 @@
       <role>ein verzweifelter Vater der seine Tochter sucht. Er ist bereit alles dafür zu tun</role>
       <aiHints>Er ist verzweifelt auf der Suche nach seiner Tocher und entsprechend gestresst.</aiHints>
     </person>
+    <person id="per.02eeb1bf">
+      <name>Jurge Tischelmann</name>
+      <appearance/>
+      <personality/>
+      <role>Schuhmachergeselle und Komplitze von Irva Vronfelden</role>
+      <aiHints/>
+    </person>
+    <person id="per.26e658e9">
+      <name>Meister Bundi</name>
+      <appearance/>
+      <personality/>
+      <role/>
+      <aiHints/>
+    </person>
   </persons>
   <items/>
-  <permissions>
-    <permission id="prm.c709cfbd">
-      <name>SUCHE_NACH_DEM_VATER</name>
-      <description>Ihr habe die Rufe von einem verzweifelten Vater in der Taverne zum Tanzenden Ochsen gehört</description>
-    </permission>
-    <permission id="prm.a0763b13">
-      <name>VERZWEIFELTER_VATER_DARF_EINTRETEN</name>
-      <description>Wenn die Helden in der Taverne zum Tanzenden Stier etwas Zeit verbracht haben, darf der verzweifelte Vater erscheinen</description>
-    </permission>
-    <permission id="prm.03b083b0">
-      <name>SUCHE_IM_WEISSEN_WALFISCH</name>
-      <description>Die Helden können jetzt den Ort Weisser Walfisch betreten und dort nach inweisen suchen</description>
-    </permission>
-    <permission id="prm.0ec96958">
-      <name>BEREIT_FUER_CHAPTER_2</name>
-      <description>Wenn die Helden erfahren haben, dass der verzweifelte Vater Arberd Vronfelden heisst, können sie im zweiten Kapitel weiter machen</description>
-    </permission>
-  </permissions>
+  <taskPredicates/>
   <cutScenes>
     <cutScene id="cs.39ba89d5">
       <name>Intro Tanzender Stier</name>
@@ -118,6 +122,12 @@
     <cutScene id="cs.12454520">
       <name>Einführung verzweifelter Vater</name>
       <text>Kaum wahrnehmbar ist in dem Lärm das quietschen und knarren der Türe, was euch aber trotzdem auffällt, da es der erste Gast ist, der sich nach euch das erste mal in den Gasthof zu trauen scheint. Nach kurzer Zeit hört Ihr jedoch eine Stimme rufen, die offensichtlich einem Mann mittleren Alters gehört, eben jenem, der wohl nicht weiter als bis zur Türe gekommen ist. „Hört mich an Ihr Männer und Frauen Gareths ! Man hat mir meinen einzigen Schatz gestohlen : Meine Tochter ist entführt worden.“ Als ob „meine Tochter ist entführt worden“ das belangloseste der Welt wäre, setzt danach wieder eifriges Gemurmel ein, so daß Ihr kaum noch verstehen könnt, mit welchen Worten der Mann (den Ihr immer noch nicht sehen könnt) weiter gegen die Menge anbrüllt. „Wer mir meine Irva wiederbringt, der soll auch reich belohnt werden !“ Kurz darauf hört man nur das Quietschen der Tür. Wahrscheinlich hat der Mann resigniert.</text>
+    </cutScene>
+    <cutScene id="cs.53a1b6bd">
+      <name>Intro Start Abenteuer in Gareth</name>
+      <text>Nach eurem letzten Abenteuer hat es euch in die Kaiserstadt Gareth verschlagen. Gareth ist die grösste bekannte Stadt und Sitz des Kaiserpalastes. Deshalb bietet die Stadt so ziemlich jede alle Vorzüge, die man sich vorstellen kann. 
+
+Aktuell befindet ihr euch auf dem Marktplatz, es ist nachmittags - euer Plan ist es jedoch, früher oder später ein erfrischendes Getränk in einer Schänke zu euch zu nehmen. Denn das habt ihr euch nach dem letzten Abenteuer wirklich verdient. </text>
     </cutScene>
   </cutScenes>
   <chapters>
@@ -130,6 +140,8 @@
       <locations>
         <locationRef ref="loc.3c0152a3"/>
         <locationRef ref="loc.36f9b376"/>
+        <locationRef ref="loc.2b1689b8"/>
+        <locationRef ref="loc.db1f327c"/>
       </locations>
       <items/>
       <tasks>
@@ -138,10 +150,8 @@
           <description>die Helden müssen ein wenig Zeit in der Taverne verbringen, z.B. etwas Essen, trinken oder sich mit den Gästen oder dem Wirt unterhalten. Vielleicht auch Tanzen oder singen. Die Aufgabe ist erledigt, wenn die Helden ein wenig Zeit in der Taverne verbracht haben</description>
           <purpose>Die Taverne dient als Schauplatz für den Auftritt des verzweifelten Vaters. Die Helden müssen hier erscheinen und etwas Zeit verbringen, dann wird der verzweifelte Vater erscheinen.</purpose>
           <required>true</required>
-          <requiredPermissions/>
-          <grantedPermissions>
-            <permissionRef ref="prm.a0763b13"/>
-          </grantedPermissions>
+          <requiredTaskPredicates/>
+          <grantedTaskPredicates/>
           <startCutSceneRef ref="cs.39ba89d5"/>
         </task>
         <task id="tsk.55b2eb96">
@@ -149,12 +159,8 @@
           <description>die Helden sollen versuchen dem Verzweifelten mann zu folgen um mit ihm zu reden. Das wird jedoch scheitern, weil sie eine Person anrempeln und es zu einer Kneipenschlägerei kommt. Dies Kneipernschlägerei hält die Helden solange auf, dass der verzweifelte Vater weg ist, als sie endlich die Taverne verlassen. Die Aufgabe ist erledigt, wenn die Helden die Taverne verlassen haben.</description>
           <purpose>Die Story soll durch diesen Task etwas verzögert werden. Und es soll eine weitere Aufgabe aufgegleist werden, die Suche nach dem verzweifelten Vater.</purpose>
           <required>true</required>
-          <requiredPermissions>
-            <permissionRef ref="prm.a0763b13"/>
-          </requiredPermissions>
-          <grantedPermissions>
-            <permissionRef ref="prm.c709cfbd"/>
-          </grantedPermissions>
+          <requiredTaskPredicates/>
+          <grantedTaskPredicates/>
           <startCutSceneRef ref="cs.12454520"/>
         </task>
         <task id="tsk.d4cafbc7">
@@ -162,13 +168,37 @@
           <description>Die Helden haben den verzweifelten Vater verpasst und müssen jetzt herausfinden, wo er ist. Dazu sollen die Helden den Vorschlag machen, an einer anderen Taverne nach Hinweisen zu suchen. Der verzweifelte Vater hat bestimmt auch in andernen Tavernen nach Helden gesucht. Die Aufgabe ist erledigt, wenn die Helden vorschlagen, in die Taverne Weisser Walfisch zu gehen.</description>
           <purpose>Das ist eine klassische Herausfoderung für Helden: Informationen beschaffen. das geht am besten in einer Kneipe bzw. in diesem Fall einer anderen Taverne. Helfen sie ggf. den Spielern, indem ein Passant einen Hinweis gibt</purpose>
           <required>true</required>
-          <requiredPermissions>
-            <permissionRef ref="prm.c709cfbd"/>
-          </requiredPermissions>
-          <grantedPermissions/>
+          <requiredTaskPredicates/>
+          <grantedTaskPredicates/>
         </task>
       </tasks>
-      <requiredPermissions/>
+      <requiredTaskPredicates/>
+      <startCutSceneRef ref="cs.53a1b6bd"/>
+    </chapter>
+    <chapter id="ch.92ed1e3f" position="2">
+      <name>Suche nach Irva</name>
+      <description>Die Helden besuchen den verzweifelten Vater, sie wissen nun, dass es  sich um Arberd Vronfelden handelt. Danach sollen sie den Freund der entführten Tochter Irva befragen.</description>
+      <aiHints/>
+      <startTime/>
+      <startLocationRef ref="loc.3c0152a3"/>
+      <locations>
+        <locationRef ref="loc.36f9b376"/>
+        <locationRef ref="loc.3c0152a3"/>
+      </locations>
+      <items/>
+      <tasks/>
+      <requiredTaskPredicates/>
+    </chapter>
+    <chapter id="ch.1fa67061" position="3">
+      <name>Neue Indizien</name>
+      <description/>
+      <aiHints/>
+      <startTime/>
+      <startLocationRef ref="loc.3c0152a3"/>
+      <locations/>
+      <items/>
+      <tasks/>
+      <requiredTaskPredicates/>
     </chapter>
   </chapters>
 </adventure>

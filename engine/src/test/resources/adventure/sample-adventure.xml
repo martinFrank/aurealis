@@ -8,13 +8,13 @@
             <name>Bridge</name>
             <description>The ship's bridge.</description>
             <aiHints>Center of command.</aiHints>
-            <requiredPermissions>
-                <permissionRef ref="prm.bridgeAccess"/>
-            </requiredPermissions>
+            <requiredTaskPredicates>
+                <taskPredicateRef ref="prm.bridgeAccess"/>
+            </requiredTaskPredicates>
             <persons>
                 <localizedPerson>
                     <personRef ref="per.captain"/>
-                    <permissionRef ref="prm.bridgeAccess"/>
+                    <taskPredicateRef ref="prm.bridgeAccess"/>
                 </localizedPerson>
             </persons>
         </location>
@@ -22,7 +22,7 @@
             <name>Cargo Hold</name>
             <description>Storage area.</description>
             <aiHints>Crates everywhere.</aiHints>
-            <requiredPermissions/>
+            <requiredTaskPredicates/>
             <persons>
                 <localizedPerson>
                     <personRef ref="per.engineer"/>
@@ -54,16 +54,16 @@
             <aiHints>Plot critical.</aiHints>
         </item>
     </items>
-    <permissions>
-        <permission id="prm.bridgeAccess">
+    <taskPredicates>
+        <taskPredicate id="prm.bridgeAccess">
             <name>Bridge access</name>
             <description>Allowed onto the bridge.</description>
-        </permission>
-        <permission id="prm.beaconActivated">
+        </taskPredicate>
+        <taskPredicate id="prm.beaconActivated">
             <name>Beacon activated</name>
             <description>The beacon is broadcasting.</description>
-        </permission>
-    </permissions>
+        </taskPredicate>
+    </taskPredicates>
     <cutScenes>
         <cutScene id="cs.intro">
             <name>Awakening Intro</name>
@@ -94,18 +94,18 @@
                     <description>Activate the beacon.</description>
                     <purpose>Call for help.</purpose>
                     <required>true</required>
-                    <requiredPermissions>
-                        <permissionRef ref="prm.bridgeAccess"/>
-                    </requiredPermissions>
-                    <grantedPermissions>
-                        <permissionRef ref="prm.beaconActivated"/>
-                    </grantedPermissions>
+                    <requiredTaskPredicates>
+                        <taskPredicateRef ref="prm.bridgeAccess"/>
+                    </requiredTaskPredicates>
+                    <grantedTaskPredicates>
+                        <taskPredicateRef ref="prm.beaconActivated"/>
+                    </grantedTaskPredicates>
                     <endCutSceneRef ref="cs.beaconLit"/>
                 </task>
             </tasks>
-            <requiredPermissions>
-                <permissionRef ref="prm.bridgeAccess"/>
-            </requiredPermissions>
+            <requiredTaskPredicates>
+                <taskPredicateRef ref="prm.bridgeAccess"/>
+            </requiredTaskPredicates>
             <startCutSceneRef ref="cs.intro"/>
         </chapter>
     </chapters>

@@ -12,11 +12,11 @@ public class TaskTracker {
     private final Chapter chapter;
     private Map<Task, Task.State> tasks = new HashMap<>();
 
-    public TaskTracker(Chapter current, Permissions permissions) {
+    public TaskTracker(Chapter current, TaskPredicates taskPredicates) {
         this.chapter = current;
 
         for(Task task: chapter.tasks()){
-            Task.State state = task.getState(permissions);
+            Task.State state = task.getState(taskPredicates);
             tasks.put(task, state);
         }
     }
@@ -29,10 +29,10 @@ public class TaskTracker {
                 .toList();
     }
 
-    //welche tasks wären bei diesen permission in progress?
-    public List<Task> getCurrentTasks(Permissions permissions) {
+    //welche tasks wären bei diesen taskPredicates in progress?
+    public List<Task> getCurrentTasks(TaskPredicates taskPredicates) {
         return tasks.keySet().stream()
-                .filter(t -> t.getState(permissions) == Task.State.IN_PROGRESS && tasks.get(t).equals(Task.State.NOT_READY))
+                .filter(t -> t.getState(taskPredicates) == Task.State.IN_PROGRESS && tasks.get(t).equals(Task.State.NOT_READY))
                 .toList();
     }
 

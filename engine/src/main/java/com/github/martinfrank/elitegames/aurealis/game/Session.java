@@ -9,17 +9,19 @@ public class Session {
 
     private final Adventure adventure;
     private final Party party;
+    public final Chat chat;
 
     private Location partyLocation;
     private String time;
-    private Permissions permissions;
+    private final TaskPredicates taskPredicates;
     private final ChapterTracker tracker;
 
     public Session(Adventure adventure, Party party) {
         this.adventure = adventure;
         tracker = new ChapterTracker(adventure);
         this.party = party;
-        permissions = new Permissions(adventure.permissions());
+        taskPredicates = new TaskPredicates(adventure.taskPredicates());
+        chat = new Chat();
     }
 
 
@@ -29,12 +31,12 @@ public class Session {
     }
 
     private void startChapter(Chapter chapter) {
-        tracker.start(chapter, permissions);
+        tracker.start(chapter, taskPredicates);
     }
 
-    public PermissionUpdateResult grant(Permission permission) {
-        permissions.grant(permission);
-        return tracker.update(permissions);
+    public TaskPredicateUpdateResult grant(TaskPredicate taskPredicate) {
+        taskPredicates.grant(taskPredicate);
+        return tracker.update(taskPredicates);
     }
 
     public Chapter getCurrentChapter() {

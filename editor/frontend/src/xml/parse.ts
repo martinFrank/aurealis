@@ -5,9 +5,9 @@ import type {
   Item,
   LocalizedPerson,
   Location,
-  Permission,
   Person,
   Task,
+  TaskPredicate,
 } from '../types';
 import { sanitizeAdventure } from '../sanitize';
 
@@ -51,7 +51,7 @@ export function parseAdventureXml(xml: string): Adventure {
       name: text(e, 'name'),
       description: text(e, 'description'),
       aiHints: text(e, 'aiHints'),
-      requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
+      requiredTaskPredicateIds: refs(e, 'requiredTaskPredicates', 'taskPredicateRef'),
       persons: parseLocalizedPersons(e),
     }));
 
@@ -74,8 +74,8 @@ export function parseAdventureXml(xml: string): Adventure {
       aiHints: text(e, 'aiHints'),
     }));
 
-  const permissions: Permission[] =
-    childrenOf(child(root, 'permissions') ?? root, 'permission').map((e) => ({
+  const taskPredicates: TaskPredicate[] =
+    childrenOf(child(root, 'taskPredicates') ?? root, 'taskPredicate').map((e) => ({
       id: e.getAttribute('id') ?? '',
       name: text(e, 'name'),
       description: text(e, 'description'),
@@ -100,7 +100,7 @@ export function parseAdventureXml(xml: string): Adventure {
       locationIds: refs(e, 'locations', 'locationRef'),
       itemIds: refs(e, 'items', 'itemRef'),
       tasks: parseTasks(e),
-      requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
+      requiredTaskPredicateIds: refs(e, 'requiredTaskPredicates', 'taskPredicateRef'),
       startCutSceneId: child(e, 'startCutSceneRef')?.getAttribute('ref') ?? '',
       endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
     }));
@@ -112,7 +112,7 @@ export function parseAdventureXml(xml: string): Adventure {
     locations,
     persons,
     items,
-    permissions,
+    taskPredicates,
     cutScenes,
     chapters,
   });
@@ -123,7 +123,7 @@ function parseLocalizedPersons(locationEl: Element): LocalizedPerson[] {
   if (!container) return [];
   return childrenOf(container, 'localizedPerson').map((e) => ({
     personId: child(e, 'personRef')?.getAttribute('ref') ?? '',
-    requiredPermissionId: child(e, 'permissionRef')?.getAttribute('ref') ?? '',
+    requiredTaskPredicateId: child(e, 'taskPredicateRef')?.getAttribute('ref') ?? '',
   }));
 }
 
@@ -136,8 +136,8 @@ function parseTasks(chapterEl: Element): Task[] {
     description: text(e, 'description'),
     purpose: text(e, 'purpose'),
     required: text(e, 'required') === 'true',
-    requiredPermissionIds: refs(e, 'requiredPermissions', 'permissionRef'),
-    grantedPermissionIds: refs(e, 'grantedPermissions', 'permissionRef'),
+    requiredTaskPredicateIds: refs(e, 'requiredTaskPredicates', 'taskPredicateRef'),
+    grantedTaskPredicateIds: refs(e, 'grantedTaskPredicates', 'taskPredicateRef'),
     startCutSceneId: child(e, 'startCutSceneRef')?.getAttribute('ref') ?? '',
     endCutSceneId: child(e, 'endCutSceneRef')?.getAttribute('ref') ?? '',
   }));

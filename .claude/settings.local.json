@@ -26,7 +26,30 @@
       "PowerShell($env:JAVA_HOME = 'C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-21_windows-x64_bin\\\\jdk-21'; & 'C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd' -pl engine test -q 2>&1 | Select-Object -Last 120)",
       "PowerShell($env:JAVA_HOME = 'C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1'; Set-Location engine; & 'C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd' test -q 2>&1 | Select-Object -Last 120)",
       "PowerShell($env:JAVA_HOME = 'C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1'; Set-Location engine; & 'C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd' test 2>&1 | Select-String -Pattern \"Tests run|BUILD|ERROR|FAIL\" | Select-Object -Last 30)",
-      "PowerShell($env:JAVA_HOME = 'C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1'; Set-Location 'C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine'; & 'C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd' test 2>&1 | Select-String -Pattern \"Tests run|BUILD|ERROR|FAIL\" | Select-Object -Last 20)"
+      "PowerShell($env:JAVA_HOME = 'C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1'; Set-Location 'C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine'; & 'C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd' test 2>&1 | Select-String -Pattern \"Tests run|BUILD|ERROR|FAIL\" | Select-Object -Last 20)",
+      "Bash(git mv *)",
+      "Bash(\"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\bin\\\\mvn.cmd\" -f engine/pom.xml -q -DskipTests=false test)",
+      "PowerShell(& \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\bin\\\\mvn.cmd\" -f engine/pom.xml -q test 2>&1 | Select-Object -Last 100)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -f engine/pom.xml -q test 2>&1 | Select-Object -Last 150)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\openjdk-25.0.2_windows-x64_bin\\\\jdk-25.0.2\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -f engine/pom.xml -q test 2>&1 | Select-Object -Last 200)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\openjdk-25.0.2_windows-x64_bin\\\\jdk-25.0.2\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -f engine/pom.xml test 2>&1 | Select-String -Pattern \"Tests run|BUILD |ERROR|FAIL\")",
+      "PowerShell(npm install *)",
+      "PowerShell(cd editor/frontend; npx tsc -b 2>&1; \"Exit: $LASTEXITCODE\")",
+      "PowerShell(npx --prefix editor/frontend tsc -b editor/frontend 2>&1; \"Exit: $LASTEXITCODE\")",
+      "Bash(echo \"Exit: $?\")",
+      "WebFetch(domain:help.apiyi.com)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=EngineTest#startChapter test)",
+      "PowerShell(Get-Command *)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=EngineTest#startChapter test 2>&1 | Select-Object -Last 80)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=EngineTest#startChapter test 2>&1 | Select-Object -Last 100)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; Set-Location \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\engine\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -Dtest=EngineTest#startChapter test 2>&1 | Select-Object -Last 80)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=\"EngineTest#startChapter\" test -q)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=\"EngineTest#startChapter\" test)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -pl engine -Dtest=\"EngineTest#startChapter\" test)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\m.frank\\\\work\\\\java\\\\jdk-25.0.1\"; & \"C:\\\\Users\\\\m.frank\\\\work\\\\apache-maven-3.9.6-bin\\\\apache-maven-3.9.6\\\\bin\\\\mvn.cmd\" -f engine/pom.xml -Dtest=\"EngineTest#startChapter\" test)",
+      "PowerShell(npx --prefix editor\\\\frontend tsc -p editor\\\\frontend\\\\tsconfig.app.json --noEmit 2>&1)",
+      "PowerShell(npx --prefix \"editor\\\\frontend\" tsc -p \"editor\\\\frontend\\\\tsconfig.json\" --noEmit 2>&1)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\m.frank\\\\IdeaProjects\\\\privat\\\\aurealis\\\\editor\\\\frontend\"; npx tsc --noEmit 2>&1; Write-Host \"exit:$LASTEXITCODE\")"
     ]
   }
 }

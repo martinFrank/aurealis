@@ -1,6 +1,6 @@
 package com.github.martinfrank.elitegames.aurealis.adventure;
 
-import com.github.martinfrank.elitegames.aurealis.game.Permissions;
+import com.github.martinfrank.elitegames.aurealis.game.TaskPredicates;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ public record Task(
         String description, //what
         String purpose, //why
         boolean required,
-        List<Permission> requiredPermissions,
-        List<Permission> grantedPermissions,
+        List<TaskPredicate> requiredTaskPredicates,
+        List<TaskPredicate> grantedTaskPredicates,
         CutScene startCutScene,
         CutScene endCutScene) {
 
@@ -19,9 +19,9 @@ public record Task(
         NOT_READY, IN_PROGRESS, COMPLETED, FAILED
     }
 
-    public State getState(Permissions permissions) {
-        for(Permission required: requiredPermissions){
-            if (!permissions.isGranted(required)) { //falls eine fehlt
+    public State getState(TaskPredicates taskPredicates) {
+        for(TaskPredicate required: requiredTaskPredicates){
+            if (!taskPredicates.isGranted(required)) { //falls eine fehlt
                 return State.NOT_READY;
             }
         }

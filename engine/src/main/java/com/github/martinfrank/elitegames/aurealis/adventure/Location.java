@@ -7,10 +7,10 @@ public record Location(
         String name,
         String description,
         String aiHints,
-        List<Permission> requiredPermissions,
+        List<TaskPredicate> requiredTaskPredicates,
         List<LocalizedPerson> persons ) {
 
-    public record LocalizedPerson (Person person, Permission requiredPermission) {
+    public record LocalizedPerson (Person person, TaskPredicate requiredTaskPredicate) {
     }
 
 }

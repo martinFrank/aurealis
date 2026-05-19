@@ -10,11 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AdventureLoader {
 
+    private static final String ABDUCTION_ADVENTURE = "/adventure/Verführung_zur_Entführung.xml";
     private static final String SAMPLE_ADVENTURE = "/adventure/Verführung_zur_Entführung.xml";
 
     public static Adventure load() throws IOException {
-        try (InputStream in = AdventureLoader.class.getResourceAsStream(SAMPLE_ADVENTURE)) {
-            assertNotNull(in, SAMPLE_ADVENTURE + " not found on test classpath");
+        try (InputStream in = AdventureLoader.class.getResourceAsStream(ABDUCTION_ADVENTURE)) {
+            assertNotNull(in, ABDUCTION_ADVENTURE + " not found on test classpath");
             return new AdventureReader().read(in);
         }
     }

@@ -3,7 +3,7 @@ package com.github.martinfrank.elitegames.aurealis.game;
 import com.github.martinfrank.elitegames.aurealis.AdventureLoader;
 import com.github.martinfrank.elitegames.aurealis.adventure.Adventure;
 import com.github.martinfrank.elitegames.aurealis.adventure.Chapter;
-import com.github.martinfrank.elitegames.aurealis.adventure.Permission;
+import com.github.martinfrank.elitegames.aurealis.adventure.TaskPredicate;
 import com.github.martinfrank.elitegames.aurealis.adventure.Task;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
 import org.junit.jupiter.api.Assertions;
@@ -35,10 +35,10 @@ class SessionTest {
 
         System.out.println("complete task: "+task.name());
         session.completeTask(task);
-        List<Permission> grantedPermissions = task.grantedPermissions();
+        List<TaskPredicate> grantedTaskPredicates = task.grantedTaskPredicates();
 
-        for(Permission permission : grantedPermissions) {
-            PermissionUpdateResult result = session.grant(permission);
+        for(TaskPredicate taskPredicate : grantedTaskPredicates) {
+            TaskPredicateUpdateResult result = session.grant(taskPredicate);
             if(result.haveTasksChanged()){
                 for(TaskChange changedTask: result.taskChanges) {
                     System.out.println("changed tasks: "+changedTask.task().name()+" from "+changedTask.oldState()+ " -> "+changedTask.newState());

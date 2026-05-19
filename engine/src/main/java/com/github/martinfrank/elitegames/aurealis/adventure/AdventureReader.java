@@ -39,19 +39,19 @@ public class AdventureReader {
         Document doc = parse(xmlInputStream);
         Element root = doc.getDocumentElement();
 
-        Map<String, Permission> permissions = readPermissions(root);
+        Map<String, TaskPredicate> taskPredicates = readTaskPredicates(root);
         Map<String, CutScene> cutScenes = readCutScenes(root);
         Map<String, Person> persons = readPersons(root);
         Map<String, Item> items = readItems(root);
-        Map<String, Location> locations = readLocations(root, persons, permissions);
-        List<Chapter> chapters = readChapters(root, locations, items, permissions, cutScenes);
+        Map<String, Location> locations = readLocations(root, persons, taskPredicates);
+        List<Chapter> chapters = readChapters(root, locations, items, taskPredicates, cutScenes);
 
         return new Adventure(
                 textOf(root, "title"),
                 textOf(root, "description"),
                 textOf(root, "author"),
                 chapters,
-                new ArrayList<>(permissions.values()),
+                new ArrayList<>(taskPredicates.values()),
                 new ArrayList<>(persons.values()),
                 new ArrayList<>(items.values()),
                 new ArrayList<>(locations.values()),
@@ -84,7 +84,7 @@ public class AdventureReader {
     private Map<String, Location> readLocations(
             Element root,
             Map<String, Person> persons,
-            Map<String, Permission> permissions
+            Map<String, TaskPredicate> taskPredicates
     ) {
         Map<String, Location> map = new LinkedHashMap<>();
         Element container = childElement(root, "locations");
@@ -96,8 +96,8 @@ public class AdventureReader {
                     textOf(e, "name"),
                     textOf(e, "description"),
                     textOf(e, "aiHints"),
-                    readRefs(e, "requiredPermissions", "permissionRef", permissions, "permission"),
-                    readLocalizedPersons(e, persons, permissions)
+                    readRefs(e, "requiredTaskPredicates", "taskPredicateRef", taskPredicates, "taskPredicate"),
+                    readLocalizedPersons(e, persons, taskPredicates)
             ));
         }
         return map;
@@ -106,23 +106,23 @@ public class AdventureReader {
     private List<Location.LocalizedPerson> readLocalizedPersons(
             Element locationEl,
             Map<String, Person> persons,
-            Map<String, Permission> permissions
+            Map<String, TaskPredicate> taskPredicates
     ) {
         List<Location.LocalizedPerson> result = new ArrayList<>();
         Element container = childElement(locationEl, "persons");
         if (container == null) return result;
         for (Element lpEl : children(container, "localizedPerson")) {
             Element personRef = childElement(lpEl, "personRef");
-            Element permRef = childElement(lpEl, "permissionRef");
+            Element predRef = childElement(lpEl, "taskPredicateRef");
             Person person = resolve(persons, personRef.getAttribute("ref"), "person");
-            Permission permission = null;
-            if (permRef != null) {
-                String ref = permRef.getAttribute("ref");
+            TaskPredicate taskPredicate = null;
+            if (predRef != null) {
+                String ref = predRef.getAttribute("ref");
                 if (ref != null && !ref.isEmpty()) {
-                    permission = resolve(permissions, ref, "permission");
+                    taskPredicate = resolve(taskPredicates, ref, "taskPredicate");
                 }
             }
-            result.add(new Location.LocalizedPerson(person, permission));
+            result.add(new Location.LocalizedPerson(person, taskPredicate));
         }
         return result;
     }
@@ -162,13 +162,13 @@ public class AdventureReader {
         return map;
     }
 
-    private Map<String, Permission> readPermissions(Element root) {
-        Map<String, Permission> map = new LinkedHashMap<>();
-        Element container = childElement(root, "permissions");
+    private Map<String, TaskPredicate> readTaskPredicates(Element root) {
+        Map<String, TaskPredicate> map = new LinkedHashMap<>();
+        Element container = childElement(root, "taskPredicates");
         if (container == null) return map;
-        for (Element e : children(container, "permission")) {
+        for (Element e : children(container, "taskPredicate")) {
             String id = e.getAttribute("id");
-            map.put(id, new Permission(
+            map.put(id, new TaskPredicate(
                     id,
                     textOf(e, "name"),
                     textOf(e, "description")
@@ -204,14 +204,14 @@ public class AdventureReader {
             Element root,
             Map<String, Location> locations,
             Map<String, Item> items,
-            Map<String, Permission> permissions,
+            Map<String, TaskPredicate> taskPredicates,
             Map<String, CutScene> cutScenes
     ) {
         List<Chapter> result = new ArrayList<>();
         Element container = childElement(root, "chapters");
         if (container == null) return result;
         for (Element e : children(container, "chapter")) {
-            result.add(readChapter(e, locations, items, permissions, cutScenes));
+            result.add(readChapter(e, locations, items, taskPredicates, cutScenes));
         }
         return result;
     }
@@ -220,7 +220,7 @@ public class AdventureReader {
             Element chapterEl,
             Map<String, Location> locations,
             Map<String, Item> items,
-            Map<String, Permission> permissions,
+            Map<String, TaskPredicate> taskPredicates,
             Map<String, CutScene> cutScenes
     ) {
         String id = chapterEl.getAttribute("id");
@@ -239,8 +239,8 @@ public class AdventureReader {
                 textOf(chapterEl, "startTime"),
                 readRefs(chapterEl, "locations", "locationRef", locations, "location"),
                 readRefs(chapterEl, "items", "itemRef", items, "item"),
-                readTasks(chapterEl, permissions, cutScenes),
-                readRefs(chapterEl, "requiredPermissions", "permissionRef", permissions, "permission"),
+                readTasks(chapterEl, taskPredicates, cutScenes),
+                readRefs(chapterEl, "requiredTaskPredicates", "taskPredicateRef", taskPredicates, "taskPredicate"),
                 readOptionalCutSceneRef(chapterEl, "startCutSceneRef", cutScenes),
                 readOptionalCutSceneRef(chapterEl, "endCutSceneRef", cutScenes)
         );
@@ -248,7 +248,7 @@ public class AdventureReader {
 
     private List<Task> readTasks(
             Element chapterEl,
-            Map<String, Permission> permissions,
+            Map<String, TaskPredicate> taskPredicates,
             Map<String, CutScene> cutScenes
     ) {
         List<Task> result = new ArrayList<>();
@@ -261,8 +261,8 @@ public class AdventureReader {
                     textOf(taskEl, "description"),
                     textOf(taskEl, "purpose"),
                     Boolean.parseBoolean(textOf(taskEl, "required")),
-                    readRefs(taskEl, "requiredPermissions", "permissionRef", permissions, "permission"),
-                    readRefs(taskEl, "grantedPermissions", "permissionRef", permissions, "permission"),
+                    readRefs(taskEl, "requiredTaskPredicates", "taskPredicateRef", taskPredicates, "taskPredicate"),
+                    readRefs(taskEl, "grantedTaskPredicates", "taskPredicateRef", taskPredicates, "taskPredicate"),
                     readOptionalCutSceneRef(taskEl, "startCutSceneRef", cutScenes),
                     readOptionalCutSceneRef(taskEl, "endCutSceneRef", cutScenes)
             ));

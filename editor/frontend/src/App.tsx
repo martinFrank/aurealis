@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
-import type { Adventure, Chapter, CutScene, Item, Location, Permission, Person } from './types';
+import type { Adventure, Chapter, CutScene, Item, Location, Person, TaskPredicate } from './types';
 import {
   newAdventure,
   newChapter,
   newCutScene,
   newItem,
   newLocation,
-  newPermission,
   newPerson,
+  newTaskPredicate,
 } from './factories';
 import { parseAdventureXml } from './xml/parse';
 import { serializeAdventureXml } from './xml/serialize';
@@ -16,14 +16,14 @@ import { Section } from './components/Section';
 import {
   CutSceneCard,
   ItemCard,
-  PermissionCard,
   PersonCard,
+  TaskPredicateCard,
 } from './components/EntityEditors';
 import { LocationCard } from './components/LocationCard';
 import { ChapterCard } from './components/ChapterCard';
 
 const CASCADING_KEYS: ReadonlySet<keyof Adventure> = new Set([
-  'permissions',
+  'taskPredicates',
   'persons',
   'items',
   'locations',
@@ -176,21 +176,21 @@ export default function App() {
         </button>
       </Section>
 
-      <Section title="Permissions" count={adventure.permissions.length}>
-        {adventure.permissions.map((p, idx) => (
-          <PermissionCard
+      <Section title="Task Predicates" count={adventure.taskPredicates.length}>
+        {adventure.taskPredicates.map((p, idx) => (
+          <TaskPredicateCard
             key={p.id}
             value={p}
-            onChange={(v: Permission) => updateAt('permissions', idx, v)}
-            onDelete={() => removeAt('permissions', idx)}
+            onChange={(v: TaskPredicate) => updateAt('taskPredicates', idx, v)}
+            onDelete={() => removeAt('taskPredicates', idx)}
           />
         ))}
         <button
           onClick={() =>
-            update({ permissions: [...adventure.permissions, newPermission()] })
+            update({ taskPredicates: [...adventure.taskPredicates, newTaskPredicate()] })
           }
         >
-          + Permission
+          + Task Predicate
         </button>
       </Section>
 

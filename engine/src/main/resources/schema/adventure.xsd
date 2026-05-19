@@ -27,8 +27,8 @@
             <xs:field xpath="@id"/>
         </xs:key>
 
-        <xs:key name="permissionKey">
-            <xs:selector xpath="a:permissions/a:permission"/>
+        <xs:key name="taskPredicateKey">
+            <xs:selector xpath="a:taskPredicates/a:taskPredicate"/>
             <xs:field xpath="@id"/>
         </xs:key>
 
@@ -57,13 +57,13 @@
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
-        <xs:keyref name="requiredPermissionRefToPermission" refer="permissionKey">
-            <xs:selector xpath=".//a:requiredPermissions/a:permissionRef"/>
+        <xs:keyref name="requiredTaskPredicateRefToTaskPredicate" refer="taskPredicateKey">
+            <xs:selector xpath=".//a:requiredTaskPredicates/a:taskPredicateRef"/>
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
-        <xs:keyref name="grantedPermissionRefToPermission" refer="permissionKey">
-            <xs:selector xpath=".//a:grantedPermissions/a:permissionRef"/>
+        <xs:keyref name="grantedTaskPredicateRefToTaskPredicate" refer="taskPredicateKey">
+            <xs:selector xpath=".//a:grantedTaskPredicates/a:taskPredicateRef"/>
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
@@ -72,8 +72,8 @@
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
-        <xs:keyref name="locationLocalizedPersonPermissionRef" refer="permissionKey">
-            <xs:selector xpath="a:locations/a:location/a:persons/a:localizedPerson/a:permissionRef"/>
+        <xs:keyref name="locationLocalizedPersonTaskPredicateRef" refer="taskPredicateKey">
+            <xs:selector xpath="a:locations/a:location/a:persons/a:localizedPerson/a:taskPredicateRef"/>
             <xs:field xpath="@ref"/>
         </xs:keyref>
 
@@ -115,10 +115,10 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="permissions">
+            <xs:element name="taskPredicates">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="taskPredicate" type="TaskPredicateType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -167,10 +167,10 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="requiredPermissions">
+            <xs:element name="requiredTaskPredicates">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="taskPredicateRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -186,10 +186,10 @@
             <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>
             <xs:element name="aiHints" type="xs:string"/>
-            <xs:element name="requiredPermissions">
+            <xs:element name="requiredTaskPredicates">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="taskPredicateRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -207,7 +207,7 @@
     <xs:complexType name="LocalizedPersonType">
         <xs:sequence>
             <xs:element name="personRef" type="RefType"/>
-            <xs:element name="permissionRef" type="RefType" minOccurs="0"/>
+            <xs:element name="taskPredicateRef" type="RefType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -238,17 +238,17 @@
             <xs:element name="description" type="xs:string"/>
             <xs:element name="purpose" type="xs:string"/>
             <xs:element name="required" type="xs:boolean"/>
-            <xs:element name="requiredPermissions">
+            <xs:element name="requiredTaskPredicates">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="taskPredicateRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="grantedPermissions">
+            <xs:element name="grantedTaskPredicates">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="permissionRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="taskPredicateRef" type="RefType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -266,7 +266,7 @@
         <xs:attribute name="id" type="xs:string" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="PermissionType">
+    <xs:complexType name="TaskPredicateType">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>

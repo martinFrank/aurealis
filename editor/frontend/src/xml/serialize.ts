@@ -17,14 +17,14 @@ export function serializeAdventureXml(adventure: Adventure): string {
     appendText(doc, el, 'name', l.name);
     appendText(doc, el, 'description', l.description);
     appendText(doc, el, 'aiHints', l.aiHints);
-    appendRefs(doc, el, 'requiredPermissions', 'permissionRef', l.requiredPermissionIds);
+    appendRefs(doc, el, 'requiredTaskPredicates', 'taskPredicateRef', l.requiredTaskPredicateIds);
 
     const personsContainer = appendChild(doc, el, 'persons');
     for (const lp of l.persons) {
       const lpEl = appendChild(doc, personsContainer, 'localizedPerson');
       const pRef = appendChild(doc, lpEl, 'personRef');
       pRef.setAttribute('ref', lp.personId);
-      appendOptionalRef(doc, lpEl, 'permissionRef', lp.requiredPermissionId);
+      appendOptionalRef(doc, lpEl, 'taskPredicateRef', lp.requiredTaskPredicateId);
     }
   }
 
@@ -49,9 +49,9 @@ export function serializeAdventureXml(adventure: Adventure): string {
     appendText(doc, el, 'aiHints', it.aiHints);
   }
 
-  const permissions = appendChild(doc, root, 'permissions');
-  for (const p of adventure.permissions) {
-    const el = appendChild(doc, permissions, 'permission');
+  const taskPredicates = appendChild(doc, root, 'taskPredicates');
+  for (const p of adventure.taskPredicates) {
+    const el = appendChild(doc, taskPredicates, 'taskPredicate');
     el.setAttribute('id', p.id);
     appendText(doc, el, 'name', p.name);
     appendText(doc, el, 'description', p.description);
@@ -93,7 +93,7 @@ function appendChapter(doc: XMLDocument, parent: Element, c: Chapter): void {
     appendTask(doc, tasks, t);
   }
 
-  appendRefs(doc, el, 'requiredPermissions', 'permissionRef', c.requiredPermissionIds);
+  appendRefs(doc, el, 'requiredTaskPredicates', 'taskPredicateRef', c.requiredTaskPredicateIds);
   appendOptionalRef(doc, el, 'startCutSceneRef', c.startCutSceneId);
   appendOptionalRef(doc, el, 'endCutSceneRef', c.endCutSceneId);
 }
@@ -105,8 +105,8 @@ function appendTask(doc: XMLDocument, parent: Element, t: Task): void {
   appendText(doc, el, 'description', t.description);
   appendText(doc, el, 'purpose', t.purpose);
   appendText(doc, el, 'required', String(t.required));
-  appendRefs(doc, el, 'requiredPermissions', 'permissionRef', t.requiredPermissionIds);
-  appendRefs(doc, el, 'grantedPermissions', 'permissionRef', t.grantedPermissionIds);
+  appendRefs(doc, el, 'requiredTaskPredicates', 'taskPredicateRef', t.requiredTaskPredicateIds);
+  appendRefs(doc, el, 'grantedTaskPredicates', 'taskPredicateRef', t.grantedTaskPredicateIds);
   appendOptionalRef(doc, el, 'startCutSceneRef', t.startCutSceneId);
   appendOptionalRef(doc, el, 'endCutSceneRef', t.endCutSceneId);
 }
@@ -153,17 +153,32 @@ function prettyPrint(doc: XMLDocument): string {
 }
 
 function indent(xml: string): string {
-  const tokens = xml.replace(/>\s*</g, '><').replace(/></g, '>\n<').split('\n');
+  const collapsed = xml.replace(/>\s+</g, '><');
+  let result = '';
   let depth = 0;
-  return tokens
-    .map((line) => {
-      const isClose = /^<\/[^>]+>/.test(line);
-      const isSelfClose = /\/>$/.test(line) || /<\?xml/.test(line);
-      const isOpen = /^<[^!?/][^>]*[^/]>$/.test(line);
-      if (isClose) depth = Math.max(0, depth - 1);
-      const result = '  '.repeat(depth) + line;
-      if (isOpen && !isSelfClose) depth += 1;
-      return result;
-    })
-    .join('\n');
+  let i = 0;
+  while (i < collapsed.length) {
+    if (collapsed[i] !== '<') {
+      const nextTag = collapsed.indexOf('<', i);
+      const end = nextTag === -1 ? collapsed.length : nextTag;
+      result += collapsed.slice(i, end);
+      i = end;
+      continue;
+    }
+    const tagEnd = collapsed.indexOf('>', i);
+    if (tagEnd === -1) {
+      result += collapsed.slice(i);
+      break;
+    }
+    const tag = collapsed.slice(i, tagEnd + 1);
+    const isClose = tag.startsWith('</');
+    const isSelfClose = tag.endsWith('/>') || tag.startsWith('<?');
+    if (isClose) depth = Math.max(0, depth - 1);
+    const afterTag = result.length > 0 && result.endsWith('>');
+    if (afterTag) result += '\n' + '  '.repeat(depth);
+    result += tag;
+    if (!isClose && !isSelfClose) depth += 1;
+    i = tagEnd + 1;
+  }
+  return result;
 }

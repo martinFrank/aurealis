@@ -1,4 +1,4 @@
-export type Permission = {
+export type TaskPredicate = {
   id: string;
   name: string;
   description: string;
@@ -6,7 +6,7 @@ export type Permission = {
 
 export type LocalizedPerson = {
   personId: string;
-  requiredPermissionId: string;
+  requiredTaskPredicateId: string;
 };
 
 export type Location = {
@@ -14,7 +14,7 @@ export type Location = {
   name: string;
   description: string;
   aiHints: string;
-  requiredPermissionIds: string[];
+  requiredTaskPredicateIds: string[];
   persons: LocalizedPerson[];
 };
 
@@ -41,8 +41,8 @@ export type Task = {
   description: string;
   purpose: string;
   required: boolean;
-  requiredPermissionIds: string[];
-  grantedPermissionIds: string[];
+  requiredTaskPredicateIds: string[];
+  grantedTaskPredicateIds: string[];
   startCutSceneId: string;
   endCutSceneId: string;
 };
@@ -64,7 +64,7 @@ export type Chapter = {
   locationIds: string[];
   itemIds: string[];
   tasks: Task[];
-  requiredPermissionIds: string[];
+  requiredTaskPredicateIds: string[];
   startCutSceneId: string;
   endCutSceneId: string;
 };
@@ -76,7 +76,7 @@ export type Adventure = {
   locations: Location[];
   persons: Person[];
   items: Item[];
-  permissions: Permission[];
+  taskPredicates: TaskPredicate[];
   cutScenes: CutScene[];
   chapters: Chapter[];
 };

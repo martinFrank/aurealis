@@ -1,25 +1,25 @@
-import type { CutScene, Permission, Task } from '../types';
+import type { CutScene, Task, TaskPredicate } from '../types';
 import { EntityCard } from './EntityCard';
 import { RefMultiSelect, RefSelect } from './RefMultiSelect';
 
 type Props = {
   value: Task;
-  permissions: Permission[];
+  taskPredicates: TaskPredicate[];
   cutScenes: CutScene[];
   onChange: (v: Task) => void;
   onDelete: () => void;
 };
 
-export function TaskCard({ value, permissions, cutScenes, onChange, onDelete }: Props) {
-  const options = permissions.map((p) => ({ id: p.id, label: p.name }));
+export function TaskCard({ value, taskPredicates, cutScenes, onChange, onDelete }: Props) {
+  const options = taskPredicates.map((p) => ({ id: p.id, label: p.name }));
   const csOpts = cutScenes.map((c) => ({ id: c.id, label: c.name }));
 
   const subtitleParts: string[] = [];
   if (value.required) subtitleParts.push('required');
-  if (value.requiredPermissionIds.length)
-    subtitleParts.push(`req ${value.requiredPermissionIds.length}`);
-  if (value.grantedPermissionIds.length)
-    subtitleParts.push(`grants ${value.grantedPermissionIds.length}`);
+  if (value.requiredTaskPredicateIds.length)
+    subtitleParts.push(`req ${value.requiredTaskPredicateIds.length}`);
+  if (value.grantedTaskPredicateIds.length)
+    subtitleParts.push(`grants ${value.grantedTaskPredicateIds.length}`);
   const subtitle = subtitleParts.join(' · ');
 
   const requiredToggle = (
@@ -69,16 +69,16 @@ export function TaskCard({ value, permissions, cutScenes, onChange, onDelete }: 
       </div>
       <div className="row">
         <RefMultiSelect
-          label="Required Permissions"
+          label="Required Task Predicates"
           options={options}
-          selectedIds={value.requiredPermissionIds}
-          onChange={(ids) => onChange({ ...value, requiredPermissionIds: ids })}
+          selectedIds={value.requiredTaskPredicateIds}
+          onChange={(ids) => onChange({ ...value, requiredTaskPredicateIds: ids })}
         />
         <RefMultiSelect
-          label="Granted Permissions"
+          label="Granted Task Predicates"
           options={options}
-          selectedIds={value.grantedPermissionIds}
-          onChange={(ids) => onChange({ ...value, grantedPermissionIds: ids })}
+          selectedIds={value.grantedTaskPredicateIds}
+          onChange={(ids) => onChange({ ...value, grantedTaskPredicateIds: ids })}
         />
       </div>
       <div className="row">

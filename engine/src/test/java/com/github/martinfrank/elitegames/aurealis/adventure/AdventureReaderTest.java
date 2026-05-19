@@ -35,7 +35,7 @@ class AdventureReaderTest {
         assertEquals(2, adventure.locations().size());
         assertEquals(2, adventure.persons().size());
         assertEquals(1, adventure.items().size());
-        assertEquals(2, adventure.permissions().size());
+        assertEquals(2, adventure.taskPredicates().size());
         assertEquals(2, adventure.cutScenes().size());
         assertEquals(1, adventure.chapters().size());
     }
@@ -51,13 +51,13 @@ class AdventureReaderTest {
     }
 
     @Test
-    void locationRequiredPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
+    void locationRequiredTaskPredicatesAreSameInstancesAsAdventureTaskPredicates() throws IOException {
         Adventure adventure = readSample();
         Location bridge = findById(adventure.locations(), "loc.bridge", Location::id);
-        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+        TaskPredicate bridgeAccess = findById(adventure.taskPredicates(), "prm.bridgeAccess", TaskPredicate::id);
 
-        assertEquals(1, bridge.requiredPermissions().size());
-        assertSame(bridgeAccess, bridge.requiredPermissions().get(0));
+        assertEquals(1, bridge.requiredTaskPredicates().size());
+        assertSame(bridgeAccess, bridge.requiredTaskPredicates().get(0));
     }
 
     @Test
@@ -65,16 +65,16 @@ class AdventureReaderTest {
         Adventure adventure = readSample();
         Location bridge = findById(adventure.locations(), "loc.bridge", Location::id);
         Person captain = findById(adventure.persons(), "per.captain", Person::id);
-        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+        TaskPredicate bridgeAccess = findById(adventure.taskPredicates(), "prm.bridgeAccess", TaskPredicate::id);
 
         assertEquals(1, bridge.persons().size());
         Location.LocalizedPerson lp = bridge.persons().get(0);
         assertSame(captain, lp.person());
-        assertSame(bridgeAccess, lp.requiredPermission());
+        assertSame(bridgeAccess, lp.requiredTaskPredicate());
     }
 
     @Test
-    void localizedPersonWithoutPermissionIsAccessible() throws IOException {
+    void localizedPersonWithoutTaskPredicateIsAccessible() throws IOException {
         Adventure adventure = readSample();
         Location cargo = findById(adventure.locations(), "loc.cargo", Location::id);
         Person engineer = findById(adventure.persons(), "per.engineer", Person::id);
@@ -82,7 +82,7 @@ class AdventureReaderTest {
         assertEquals(1, cargo.persons().size());
         Location.LocalizedPerson lp = cargo.persons().get(0);
         assertSame(engineer, lp.person());
-        assertEquals(null, lp.requiredPermission());
+        assertEquals(null, lp.requiredTaskPredicate());
     }
 
     @Test
@@ -124,25 +124,25 @@ class AdventureReaderTest {
     }
 
     @Test
-    void chapterRequiredPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
+    void chapterRequiredTaskPredicatesAreSameInstancesAsAdventureTaskPredicates() throws IOException {
         Adventure adventure = readSample();
         Chapter chapter = adventure.chapters().get(0);
-        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
+        TaskPredicate bridgeAccess = findById(adventure.taskPredicates(), "prm.bridgeAccess", TaskPredicate::id);
 
-        assertEquals(1, chapter.requiredPermissions().size());
-        assertSame(bridgeAccess, chapter.requiredPermissions().get(0));
+        assertEquals(1, chapter.requiredTaskPredicates().size());
+        assertSame(bridgeAccess, chapter.requiredTaskPredicates().get(0));
     }
 
     @Test
-    void taskPermissionsAreSameInstancesAsAdventurePermissions() throws IOException {
+    void taskTaskPredicatesAreSameInstancesAsAdventureTaskPredicates() throws IOException {
         Adventure adventure = readSample();
         Task task = adventure.chapters().get(0).tasks().get(0);
 
-        Permission bridgeAccess = findById(adventure.permissions(), "prm.bridgeAccess", Permission::id);
-        Permission beaconActivated = findById(adventure.permissions(), "prm.beaconActivated", Permission::id);
+        TaskPredicate bridgeAccess = findById(adventure.taskPredicates(), "prm.bridgeAccess", TaskPredicate::id);
+        TaskPredicate beaconActivated = findById(adventure.taskPredicates(), "prm.beaconActivated", TaskPredicate::id);
 
-        assertSame(bridgeAccess, task.requiredPermissions().get(0));
-        assertSame(beaconActivated, task.grantedPermissions().get(0));
+        assertSame(bridgeAccess, task.requiredTaskPredicates().get(0));
+        assertSame(beaconActivated, task.grantedTaskPredicates().get(0));
         assertTrue(task.required());
     }
 
@@ -184,14 +184,14 @@ class AdventureReaderTest {
                     </locations>
                     <persons/>
                     <items/>
-                    <permissions/>
+                    <taskPredicates/>
                     <cutScenes/>
                     <chapters>
                         <chapter id="ch.1" position="1">
                             <name>x</name><description>x</description><aiHints>x</aiHints>
                             <startTime>x</startTime>
                             <startLocationRef ref="loc.does-not-exist"/>
-                            <locations/><persons/><items/><tasks/><requiredPermissions/>
+                            <locations/><persons/><items/><tasks/><requiredTaskPredicates/>
                         </chapter>
                     </chapters>
                 </adventure>

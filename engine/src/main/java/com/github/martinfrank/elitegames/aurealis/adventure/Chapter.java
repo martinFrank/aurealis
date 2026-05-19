@@ -1,6 +1,6 @@
 package com.github.martinfrank.elitegames.aurealis.adventure;
 
-import com.github.martinfrank.elitegames.aurealis.game.Permissions;
+import com.github.martinfrank.elitegames.aurealis.game.TaskPredicates;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public record Chapter (
         List<Location> locations,
         List<Item> items,
         List<Task> tasks,
-        List<Permission> requiredPermissions,
+        List<TaskPredicate> requiredTaskPredicates,
         CutScene startCutScene,
         CutScene endCutScene)
         implements Comparable<Chapter> {
@@ -30,9 +30,9 @@ public record Chapter (
         NOT_READY, OPEN, IN_PROGRESS, DONE;
     }
 
-    public boolean isReady(Permissions permissions) {
-        for(Permission required: requiredPermissions){
-            if (!permissions.isGranted(required)) { //falls eine fehlt
+    public boolean isReady(TaskPredicates taskPredicates) {
+        for(TaskPredicate required: requiredTaskPredicates){
+            if (!taskPredicates.isGranted(required)) { //falls eine fehlt
                 return false;
             }
         }
