@@ -2,16 +2,22 @@ package com.github.martinfrank.elitegames.aurealis.game;
 
 import com.github.martinfrank.elitegames.aurealis.adventure.Adventure;
 import com.github.martinfrank.elitegames.aurealis.adventure.Chapter;
+import com.github.martinfrank.elitegames.aurealis.adventure.Task;
+import com.github.martinfrank.elitegames.aurealis.adventure.TaskPredicate;
 import com.github.martinfrank.elitegames.aurealis.agent.ActionResult;
 import com.github.martinfrank.elitegames.aurealis.agent.GameContext;
 import com.github.martinfrank.elitegames.aurealis.agent.InputInterpreter;
 import com.github.martinfrank.elitegames.aurealis.agent.Intent;
 import com.github.martinfrank.elitegames.aurealis.agent.LlmProvider;
 import com.github.martinfrank.elitegames.aurealis.agent.ResponseGenerator;
+import com.github.martinfrank.elitegames.aurealis.agent.TaskFulfillmentJudge;
 import com.github.martinfrank.elitegames.aurealis.party.Party;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Engine {
@@ -22,6 +28,7 @@ public class Engine {
     private final InputInterpreter inputInterpreter;
     private final ContextResolver contextResolver;
     private final ActionStage actionStage;
+    private final TaskFulfillmentJudge taskJudge;
     private final ResponseGenerator responseGenerator;
 
     public Engine(Adventure adventure, Party party) {
@@ -29,6 +36,7 @@ public class Engine {
         inputInterpreter = new InputInterpreter(LlmProvider.defaultChatModel());
         contextResolver = new ContextResolver();
         actionStage = new ActionStage();
+        taskJudge = new TaskFulfillmentJudge(LlmProvider.defaultChatModel());
         responseGenerator = new ResponseGenerator(LlmProvider.defaultChatModel());
     }
 
@@ -55,10 +63,30 @@ public class Engine {
         Intent intent = inputInterpreter.interpret(playerMessage, context);
         session.chat.add(Chat.Role.PLAYER, playerMessage);
         ActionResult result = actionStage.execute(intent, session);
-        String response = responseGenerator.generate(context, intent, result);
+
+        List<Task> fulfilled = taskJudge.evaluate(context, intent, result, session.getCurrentTasks());
+        Chapter chapterBefore = session.getCurrentChapter();
+        for (Task t : fulfilled) {
+            session.completeTask(t);
+        }
+        List<TaskPredicate> granted = new ArrayList<>();
+        for (Task t : fulfilled) {
+            for (TaskPredicate p : t.grantedTaskPredicates()) {
+                session.grant(p);
+                granted.add(p);
+            }
+        }
+        Chapter chapterAfter = session.getCurrentChapter();
+        Chapter newChapter = !Objects.equals(chapterBefore, chapterAfter) ? chapterAfter : null;
+
+        ActionResult enriched = new ActionResult(
+                result.accepted(), result.details(), result.movedTo(),
+                granted, fulfilled, newChapter);
+
+        String response = responseGenerator.generate(context, playerMessage, intent, enriched);
 
         session.chat.add(Chat.Role.GAME_MASTER, response);
-        System.out.println(response);
+//        System.out.println(response);
     }
 
     private void startChapter() {

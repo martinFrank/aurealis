@@ -55,4 +55,8 @@ public class Session {
     public Party getParty() {
         return party;
     }
+
+    public TaskPredicates getTaskPredicates() {
+        return taskPredicates;
+    }
 }

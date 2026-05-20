@@ -39,6 +39,17 @@ Jede Spielereingabe durchläuft fünf Stufen:
 4. **Response Generator** — bekommt Context + `ActionResult` und erzeugt die narrative Antwort. Auf abgelehnte Aktionen reagiert er in-character ("die Tür ist verschlossen"), auf erlaubte beschreibt er das Ergebnis und den neuen Spielzustand.
 5. **Response** — wird an den Spieler geliefert und in `Chat` persistiert; State-Deltas werden in `Session` angewendet.
 
+** Kurzform:**
+
+    PLAYER input
+    → resolve context (10 history entries)    
+    → interpret (LLM → Intent)
+    → action stage (deterministisch, MoveTo mit isReady-Check)
+    → task judge (LLM → erfüllte Tasks)
+    → engine applies (completeTask + grant predicates → auto chapter transition)
+    → response generator (LLM → narrative GM-Antwort)
+    → println + Chat-Entry
+
 ### Verantwortungstrennung: Engine entscheidet, LLM narriert
 
 **Was ist möglich → entscheidet die Engine (deterministisch).** Was passiert erzählerisch → narriert das LLM (kreativ). Diese Trennung ist nicht verhandelbar:

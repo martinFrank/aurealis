@@ -43,7 +43,10 @@
       <name>Taverne Weisser Walfisch</name>
       <description>Die Taverne ist ein alter Steinbau mit einem spitzen Dach und einer großen Eingangstür, über der das Wappen eines weissen Wals in schwarzem Holz prangt. Drinnen herrscht eine gemütliche Atmosphäre: die Mauern sind mit Fellen tapeziert, die Tische sind von Lampen beleuchtet und die Luft ist dick von dem Duft von Bratfleisch und Bier. Der Wirt selbst, ein gutmütiger Mann namens Gundolf, bedient seine Gäste gerne mit einem Lächeln und einer Geschichte, sobald er Zeit dazu findet.</description>
       <aiHints>An der Theke sitzt Bjoern Skaldottir, er weiss wer der gesuchte Vater ist. Der Wirt Gundolf Attermen weiss auch, wer der verzweifelte Vater ist.</aiHints>
-      <requiredTaskPredicates/>
+      <requiredTaskPredicates>
+        <taskPredicateRef ref="prm.2d34211d"/>
+        <taskPredicateRef ref="prm.d879539d"/>
+      </requiredTaskPredicates>
       <persons>
         <localizedPerson>
           <personRef ref="per.7d5f0de4"/>
@@ -121,7 +124,24 @@ Ich bin von zwei Räubern gekidnappt worden. Sie zwingen mich, Dir diesen Brief 
       <aiHints/>
     </item>
   </items>
-  <taskPredicates/>
+  <taskPredicates>
+    <taskPredicate id="prm.99f024ea">
+      <name>SUCHE_NACH_DEM_VATER</name>
+      <description>Ihr habe die Rufe von einem verzweifelten Vater in der Taverne zum Tanzenden Ochsen gehört</description>
+    </taskPredicate>
+    <taskPredicate id="prm.21b63bc5">
+      <name>VERZWEIFELTER_VATER_DARF_EINTRETEN</name>
+      <description>Wenn die Helden in der Taverne zum Tanzenden Stier etwas Zeit verbracht haben, darf der verzweifelte Vater erscheinen</description>
+    </taskPredicate>
+    <taskPredicate id="prm.2d34211d">
+      <name>SUCHE_IM_WEISSEN_WALFISCH</name>
+      <description>Die Helden können jetzt den Ort Weisser Walfisch betreten und dort nach inweisen suchen</description>
+    </taskPredicate>
+    <taskPredicate id="prm.d879539d">
+      <name>BEREIT_FUER_CHAPTER_2</name>
+      <description>Wenn die Helden erfahren haben, dass der verzweifelte Vater Arberd Vronfelden heisst, können sie im zweiten Kapitel weiter machen</description>
+    </taskPredicate>
+  </taskPredicates>
   <cutScenes>
     <cutScene id="cs.39ba89d5">
       <name>Intro Tanzender Stier</name>
@@ -159,7 +179,9 @@ Aktuell befindet ihr euch auf dem Marktplatz, es ist nachmittags - euer Plan ist
           <purpose>Die Taverne dient als Schauplatz für den Auftritt des verzweifelten Vaters. Die Helden müssen hier erscheinen und etwas Zeit verbringen, dann wird der verzweifelte Vater erscheinen.</purpose>
           <required>true</required>
           <requiredTaskPredicates/>
-          <grantedTaskPredicates/>
+          <grantedTaskPredicates>
+            <taskPredicateRef ref="prm.21b63bc5"/>
+          </grantedTaskPredicates>
           <startCutSceneRef ref="cs.39ba89d5"/>
         </task>
         <task id="tsk.55b2eb96">
@@ -167,8 +189,13 @@ Aktuell befindet ihr euch auf dem Marktplatz, es ist nachmittags - euer Plan ist
           <description>die Helden sollen versuchen dem Verzweifelten mann zu folgen um mit ihm zu reden. Das wird jedoch scheitern, weil sie eine Person anrempeln und es zu einer Kneipenschlägerei kommt. Dies Kneipernschlägerei hält die Helden solange auf, dass der verzweifelte Vater weg ist, als sie endlich die Taverne verlassen. Die Aufgabe ist erledigt, wenn die Helden die Taverne verlassen haben.</description>
           <purpose>Die Story soll durch diesen Task etwas verzögert werden. Und es soll eine weitere Aufgabe aufgegleist werden, die Suche nach dem verzweifelten Vater.</purpose>
           <required>true</required>
-          <requiredTaskPredicates/>
-          <grantedTaskPredicates/>
+          <requiredTaskPredicates>
+            <taskPredicateRef ref="prm.21b63bc5"/>
+          </requiredTaskPredicates>
+          <grantedTaskPredicates>
+            <taskPredicateRef ref="prm.99f024ea"/>
+            <taskPredicateRef ref="prm.2d34211d"/>
+          </grantedTaskPredicates>
           <startCutSceneRef ref="cs.12454520"/>
         </task>
         <task id="tsk.d4cafbc7">
@@ -176,7 +203,10 @@ Aktuell befindet ihr euch auf dem Marktplatz, es ist nachmittags - euer Plan ist
           <description>Die Helden haben den verzweifelten Vater verpasst und müssen jetzt herausfinden, wo er ist. Dazu sollen die Helden den Vorschlag machen, an einer anderen Taverne nach Hinweisen zu suchen. Der verzweifelte Vater hat bestimmt auch in andernen Tavernen nach Helden gesucht. Die Aufgabe ist erledigt, wenn die Helden vorschlagen, in die Taverne Weisser Walfisch zu gehen.</description>
           <purpose>Das ist eine klassische Herausfoderung für Helden: Informationen beschaffen. das geht am besten in einer Kneipe bzw. in diesem Fall einer anderen Taverne. Helfen sie ggf. den Spielern, indem ein Passant einen Hinweis gibt</purpose>
           <required>true</required>
-          <requiredTaskPredicates/>
+          <requiredTaskPredicates>
+            <taskPredicateRef ref="prm.99f024ea"/>
+            <taskPredicateRef ref="prm.2d34211d"/>
+          </requiredTaskPredicates>
           <grantedTaskPredicates/>
         </task>
       </tasks>
@@ -195,7 +225,9 @@ Aktuell befindet ihr euch auf dem Marktplatz, es ist nachmittags - euer Plan ist
       </locations>
       <items/>
       <tasks/>
-      <requiredTaskPredicates/>
+      <requiredTaskPredicates>
+        <taskPredicateRef ref="prm.d879539d"/>
+      </requiredTaskPredicates>
     </chapter>
     <chapter id="ch.1fa67061" position="3">
       <name>Neue Indizien</name>

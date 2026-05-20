@@ -1,6 +1,8 @@
 package com.github.martinfrank.elitegames.aurealis.agent;
 
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.github.martinfrank.elitegames.aurealis.adventure.Item;
 import com.github.martinfrank.elitegames.aurealis.adventure.Location;
 import com.github.martinfrank.elitegames.aurealis.adventure.Person;
@@ -12,7 +14,9 @@ import org.slf4j.LoggerFactory;
 public class InputInterpreter {
 
     private static final Logger LOG = LoggerFactory.getLogger(InputInterpreter.class);
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+            .enable(JsonReadFeature.ALLOW_JAVA_COMMENTS)
+            .build();
 
     private final ChatLanguageModel model;
 
@@ -22,10 +26,10 @@ public class InputInterpreter {
 
     public Intent interpret(String playerMessage, GameContext context) {
         String prompt = buildPrompt(playerMessage, context);
-        LOG.trace("intent prompt:\n{}", prompt);
+        LOG.debug("intent prompt:\n{}", prompt);
         try {
             String raw = model.generate(prompt);
-            LOG.trace("intent llm raw: {}", raw);
+            LOG.debug("intent llm raw: {}", raw);
             String json = extractJson(raw);
             if (json == null) {
                 LOG.warn("no JSON in LLM response, falling back to FreeForm");
